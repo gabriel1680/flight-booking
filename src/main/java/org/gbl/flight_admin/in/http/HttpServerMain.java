@@ -4,9 +4,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class FlightAdminApplication {
+public class HttpServerMain {
 
     public static void main(String[] args) {
-        SpringApplication.run(FlightAdminApplication.class, args);
+        SpringApplication.run(HttpServerMain.class, args);
     }
 }
