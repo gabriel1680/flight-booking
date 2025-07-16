@@ -16,7 +16,11 @@ public class Identity {
     }
 
     public static Identity of(String aString) {
-        return new Identity(UUID.fromString(aString));
+        try {
+            return new Identity(UUID.fromString(aString));
+        } catch (RuntimeException e) {
+            throw new DomainException("Invalid id format", e);
+        }
     }
 
     public String value() {
