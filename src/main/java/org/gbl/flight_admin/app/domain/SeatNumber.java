@@ -9,7 +9,7 @@ public record SeatNumber(String value) {
     private static final Pattern NUMBER_PATTERN = Pattern.compile("^[0-9]{6}$");
 
     public SeatNumber {
-        if (value == null || value.isEmpty() || !NUMBER_PATTERN.matcher(value).hasMatch()) {
+        if (value == null || value.isEmpty() || !NUMBER_PATTERN.matcher(value).matches()) {
             throw new InvalidSeatNumberException();
         }
     }
