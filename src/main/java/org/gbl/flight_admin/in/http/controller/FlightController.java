@@ -1,4 +1,4 @@
-package org.gbl.flight_admin.in.http;
+package org.gbl.flight_admin.in.http.controller;
 
 import org.gbl.flight_admin.FlightAdminApi.CreateFlightRequest;
 import org.gbl.flight_admin.FlightAdminApi.FlightQueryResponse;

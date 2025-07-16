@@ -1,4 +1,4 @@
-package org.gbl.flight_admin.in.http;
+package org.gbl.flight_admin.in.http.controller;
 
 import org.gbl.flight_admin.FlightAdminApi.AddFlightSeatRequest;
 import org.gbl.flight_admin.FlightAdminApi.AddFlightSeatsRequest;

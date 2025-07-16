@@ -1,7 +1,7 @@
 package org.gbl.flight_admin.out.repository.memory;
 
 import org.gbl.flight_admin.FlightAdminApi.FlightQueryResponse;
-import org.gbl.flight_admin.app.FlightQueryService;
+import org.gbl.flight_admin.app.service.FlightQueryService;
 import org.gbl.flight_admin.app.domain.Flight;
 
 import java.util.List;

@@ -1,13 +1,12 @@
 package org.gbl.flight_admin.out.repository.memory;
 
-import org.gbl.flight_admin.app.FlightRepository;
+import org.gbl.flight_admin.app.service.FlightRepository;
 import org.gbl.flight_admin.app.domain.Flight;
 import org.gbl.shared.domain.Identity;
 
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 

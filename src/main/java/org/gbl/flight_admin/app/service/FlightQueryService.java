@@ -1,4 +1,4 @@
-package org.gbl.flight_admin.app;
+package org.gbl.flight_admin.app.service;
 
 import org.gbl.flight_admin.FlightAdminApi.FlightQueryResponse;
 

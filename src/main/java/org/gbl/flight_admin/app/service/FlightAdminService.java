@@ -1,4 +1,4 @@
-package org.gbl.flight_admin.app;
+package org.gbl.flight_admin.app.service;
 
 import org.gbl.flight_admin.FlightAdminApi;
 import org.gbl.flight_admin.app.domain.Flight;
@@ -7,12 +7,12 @@ import org.gbl.shared.domain.Identity;
 
 import java.util.List;
 
-public class FlightAdminApiImpl implements FlightAdminApi {
+public class FlightAdminService implements FlightAdminApi {
 
     private final FlightRepository flightRepository;
     private final FlightQueryService queryService;
 
-    public FlightAdminApiImpl(FlightRepository flightRepository,
+    public FlightAdminService(FlightRepository flightRepository,
                               FlightQueryService queryService) {
         this.flightRepository = flightRepository;
         this.queryService = queryService;
