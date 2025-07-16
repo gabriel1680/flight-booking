@@ -1,4 +1,4 @@
-package org.gbl.flight_admin.in.http.config;
+package org.gbl.flight_admin.config;
 
 import org.gbl.flight_admin.FlightAdminApi;
 import org.gbl.flight_admin.app.domain.Flight;
