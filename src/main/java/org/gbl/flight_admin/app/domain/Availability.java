@@ -2,15 +2,15 @@ package org.gbl.flight_admin.app.domain;
 
 import org.gbl.shared.domain.DomainException;
 
-public enum SeatState {
+public enum Availability {
     AVAILABLE,
     UNAVAILABLE;
 
-    public SeatState take() {
-        if (SeatState.UNAVAILABLE == this) {
+    public Availability take() {
+        if (Availability.UNAVAILABLE == this) {
             throw new SeatAlreadyTakenException();
         }
-        return SeatState.UNAVAILABLE;
+        return Availability.UNAVAILABLE;
     }
 
     public static class SeatAlreadyTakenException extends DomainException {
