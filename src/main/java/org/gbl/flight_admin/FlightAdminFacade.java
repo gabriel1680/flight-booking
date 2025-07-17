@@ -1,19 +1,21 @@
-package org.gbl.flight_admin.app.service;
+package org.gbl.flight_admin;
 
-import org.gbl.flight_admin.FlightAdminApi;
 import org.gbl.flight_admin.app.domain.Flight;
 import org.gbl.flight_admin.app.domain.Seat;
+import org.gbl.flight_admin.app.service.FlightNotFoundException;
+import org.gbl.flight_admin.app.service.FlightQueryService;
+import org.gbl.flight_admin.app.service.FlightRepository;
 import org.gbl.shared.domain.Identity;
 
 import java.util.List;
 
-public class FlightAdminService implements FlightAdminApi {
+public class FlightAdminFacade implements FlightAdminApi {
 
     private final FlightRepository flightRepository;
     private final FlightQueryService queryService;
 
-    public FlightAdminService(FlightRepository flightRepository,
-                              FlightQueryService queryService) {
+    public FlightAdminFacade(FlightRepository flightRepository,
+                             FlightQueryService queryService) {
         this.flightRepository = flightRepository;
         this.queryService = queryService;
     }

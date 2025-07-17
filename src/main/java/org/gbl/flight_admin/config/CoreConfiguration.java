@@ -2,7 +2,7 @@ package org.gbl.flight_admin.config;
 
 import org.gbl.flight_admin.FlightAdminApi;
 import org.gbl.flight_admin.app.domain.Flight;
-import org.gbl.flight_admin.app.service.FlightAdminService;
+import org.gbl.flight_admin.FlightAdminFacade;
 import org.gbl.flight_admin.app.service.FlightQueryService;
 import org.gbl.flight_admin.app.service.FlightRepository;
 import org.gbl.flight_admin.out.repository.memory.InMemoryFlightRepository;
@@ -21,7 +21,7 @@ public class CoreConfiguration {
     @Bean
     public FlightAdminApi flightAdminApi(FlightRepository flightRepository,
                                          FlightQueryService queryService) {
-        return new FlightAdminService(flightRepository, queryService);
+        return new FlightAdminFacade(flightRepository, queryService);
     }
 
     @Primary
