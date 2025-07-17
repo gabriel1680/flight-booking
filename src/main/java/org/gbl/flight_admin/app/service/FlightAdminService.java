@@ -63,6 +63,6 @@ public class FlightAdminService implements FlightAdminApi {
                 flight.route().destination(),
                 flight.schedule().boardingAt(),
                 flight.schedule().landingAt(),
-                flight.seats().stream().map(Seat::id).map(Identity::value).toList());
+                flight.seats().stream().map(Seat::id).toList());
     }
 }
