@@ -9,27 +9,33 @@ public class Seat {
     private final Identity id;
     private final SeatNumber number;
     private final SeatType type;
+    private final Availability availability;
 
-    private Seat(Identity id, SeatNumber number, SeatType type) {
+    private Seat(Identity id, SeatNumber number, SeatType type, Availability availability) {
         this.id = id;
         this.number = number;
         this.type = type;
+        this.availability = availability;
     }
 
     public static Seat create(String number, String type) {
-        return new Seat(Identity.nextId(), new SeatNumber(number), SeatType.of(type));
+        return new Seat(Identity.nextId(), new SeatNumber(number), SeatType.of(type), Availability.AVAILABLE);
     }
 
-    public Identity id() {
-        return id;
+    public String id() {
+        return id.value();
     }
 
-    public SeatNumber number() {
-        return number;
+    public String number() {
+        return number.value();
     }
 
-    public SeatType type() {
-        return type;
+    public String type() {
+        return type.toString();
+    }
+
+    public boolean isAvailable() {
+        return availability.equals(Availability.AVAILABLE);
     }
 
     @Override
