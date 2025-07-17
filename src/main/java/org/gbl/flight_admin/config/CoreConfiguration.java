@@ -5,7 +5,7 @@ import org.gbl.flight_admin.app.domain.Flight;
 import org.gbl.flight_admin.FlightAdminFacade;
 import org.gbl.flight_admin.app.service.FlightQueryService;
 import org.gbl.flight_admin.app.service.FlightRepository;
-import org.gbl.flight_admin.out.repository.memory.InMemoryFlightRepository;
+import org.gbl.flight_admin.out.memory.InMemoryFlightRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
