@@ -1,0 +1,18 @@
+server:
+  port: 8080
+  undertow:
+    threads:
+      worker: 10
+      io: 2
+spring:
+  datasource:
+    driver-class-name: org.h2.Driver
+    username: root
+    password: 123
+    url: jdbc:h2:mem:flights;MODE=POSTGRES;DATABASE_TO_LOWER=true
+jpa:
+  defer-datasource-initialization: true
+h2:
+  console:
+    enabled: true
+    path: /h2

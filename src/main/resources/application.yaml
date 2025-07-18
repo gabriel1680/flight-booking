@@ -1,0 +1,49 @@
+server:
+  port: ${webserver.port}
+  servlet:
+    context-path: /api
+  compression:
+    enabled: true
+    mime-types: text/html,text/xml,text/javascript,application/javascript,application/json
+    min-response-size: 1024
+  undertow:
+    threads:
+      worker: 64
+      io: 4
+
+spring:
+  application:
+    name: booking
+  flyway:
+    enabled: true
+  jooq:
+    sql-dialect: Postgres
+  datasource:
+    url: jdbc:postgresql://${postgres.url}/${postgres.database}?sslmode=Require;TrustServerCertificate=true
+    username: ${postgres.username}
+    password: ${postgres.password}
+  hikari:
+    auto-commit: false
+    connection-timeout: 250
+    max-lifetime: 60000
+    maximum-pool-size: 20
+    minimum-idle: 10
+    pool-name: master
+  jpa:
+    open-in-view: false
+    show-sql: true
+    hibernate:
+      ddl-auto: none
+    properties:
+      "[hibernate.dialect]": org.hibernate.dialect.PostgreSQLDialect
+      "[hibernate.generate_statics]": false
+#      "[hibernate.connection.provider_disables_autocommit]": true
+
+management:
+  otlp:
+    metrics:
+      export:
+        enabled: false
+    tracing:
+      enabled: false
+
