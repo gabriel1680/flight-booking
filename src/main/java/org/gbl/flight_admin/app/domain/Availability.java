@@ -6,6 +6,14 @@ public enum Availability {
     AVAILABLE,
     UNAVAILABLE;
 
+    public static Availability of(int availability) {
+        return switch (availability) {
+            case 0 -> UNAVAILABLE;
+            case 1 -> AVAILABLE;
+            default -> throw new SeatAlreadyTakenException();
+        };
+    }
+
     public Availability take() {
         if (Availability.UNAVAILABLE == this) {
             throw new SeatAlreadyTakenException();

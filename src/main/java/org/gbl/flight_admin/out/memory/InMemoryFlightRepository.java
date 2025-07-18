@@ -35,7 +35,7 @@ public class InMemoryFlightRepository implements FlightRepository, FlightQuerySe
     }
 
     @Override
-    public List<FlightQueryResponse> findAll() {
+    public List<FlightQueryResponse> searchFlights() {
         return flights.values().stream().map(flight -> {
             final var capacity = flight.capacity().value();
             final var seatsCount = flight.seats().size();

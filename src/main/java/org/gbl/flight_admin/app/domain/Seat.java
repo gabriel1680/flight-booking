@@ -19,11 +19,17 @@ public class Seat {
     }
 
     public static Seat create(String number, String type) {
-        return new Seat(Identity.nextId(), new SeatNumber(number), SeatType.of(type), Availability.AVAILABLE);
+        return new Seat(Identity.nextId(), new SeatNumber(number), SeatType.of(type),
+                        Availability.AVAILABLE);
     }
 
-    public String id() {
-        return id.value();
+    public static Seat hydrate(Identity id, SeatNumber number, SeatType type,
+                               Availability availability) {
+        return new Seat(id, number, type, availability);
+    }
+
+    public Identity id() {
+        return id;
     }
 
     public String number() {

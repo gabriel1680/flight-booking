@@ -10,11 +10,11 @@ import java.util.List;
 import java.util.Objects;
 
 public class Flight {
-    private Identity id;
+    private final Identity id;
     private Capacity capacity;
     private Route route;
     private Schedule schedule;
-    private List<Seat> seats;
+    private final List<Seat> seats;
 
     private Flight(Identity id, Capacity capacity, Route route, Schedule schedule,
                    List<Seat> seats) {
@@ -33,6 +33,11 @@ public class Flight {
                 new Route(origin, destination),
                 new Schedule(boardingAt, landingAt),
                 new ArrayList<>());
+    }
+
+    public static Flight hydrate(Identity id, Capacity capacity, Route route, Schedule schedule,
+                                 List<Seat> seats) {
+        return new Flight(id, capacity, route, schedule, seats);
     }
 
     public Identity id() {

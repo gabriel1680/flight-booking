@@ -23,6 +23,10 @@ public class Identity {
         }
     }
 
+    public static Identity of(UUID aUuid) {
+        return new Identity(aUuid);
+    }
+
     public String value() {
         return value.toString();
     }

@@ -43,7 +43,7 @@ public class FlightAdminFacade implements FlightAdminApi {
 
     @Override
     public List<FlightQueryResponse> getFlights() {
-        return queryService.findAll();
+        return queryService.searchFlights();
     }
 
     @Override
@@ -65,6 +65,6 @@ public class FlightAdminFacade implements FlightAdminApi {
                 flight.route().destination(),
                 flight.schedule().boardingAt(),
                 flight.schedule().landingAt(),
-                flight.seats().stream().map(Seat::id).toList());
+                flight.seats().stream().map(Seat::id).map(Identity::value).toList());
     }
 }
