@@ -5,5 +5,5 @@ import org.gbl.flight_admin.FlightAdminApi.FlightQueryResponse;
 import java.util.List;
 
 public interface FlightQueryService {
-    List<FlightQueryResponse> findAll();
+    List<FlightQueryResponse> searchFlights();
 }
