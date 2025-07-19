@@ -5,6 +5,7 @@ import org.gbl.shared.domain.Identity;
 
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -22,7 +23,7 @@ public class Flight {
         this.capacity = capacity;
         this.route = route;
         this.schedule = schedule;
-        this.seats = seats;
+        this.seats = new ArrayList<>(seats);
     }
 
     public static Flight create(int capacity, String origin, String destination,
@@ -56,7 +57,7 @@ public class Flight {
         return schedule;
     }
 
-    public List<Seat> seats() {
+    public Collection<Seat> seats() {
         return Collections.unmodifiableList(seats);
     }
 
