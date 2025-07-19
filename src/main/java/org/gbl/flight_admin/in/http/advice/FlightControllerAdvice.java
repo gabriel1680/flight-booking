@@ -25,4 +25,10 @@ public class FlightControllerAdvice {
     public ResponseEntity<String> application(ApplicationException e) {
         return ResponseEntity.badRequest().body(e.getMessage());
     }
+
+    @ExceptionHandler(RuntimeException.class)
+    public ResponseEntity<String> handleAnyException(Exception ex) {
+        final var internalServerError = HttpStatus.INTERNAL_SERVER_ERROR;
+        return ResponseEntity.status(internalServerError).body(internalServerError.toString());
+    }
 }
