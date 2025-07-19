@@ -12,8 +12,6 @@ import org.gbl.flight_admin.out.postgres.model.PostgresFlightModel;
 import org.gbl.flight_admin.out.postgres.model.PostgresSeatModel;
 import org.gbl.shared.domain.Identity;
 
-import java.util.Locale;
-
 public class PostgresFlightMapper {
 
     public Flight toDomain(PostgresFlightModel model) {
@@ -51,7 +49,7 @@ public class PostgresFlightMapper {
         final var model = new PostgresSeatModel();
         model.id = seat.id().uuid();
         model.number = seat.number();
-        model.type = seat.type().toLowerCase(Locale.ROOT);
+        model.type = seat.type();
         model.availability = seat.isAvailable() ? 1 : 0;
         return model;
     }

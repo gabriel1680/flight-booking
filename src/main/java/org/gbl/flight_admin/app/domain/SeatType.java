@@ -2,6 +2,8 @@ package org.gbl.flight_admin.app.domain;
 
 import org.gbl.shared.domain.DomainException;
 
+import java.util.Locale;
+
 public enum SeatType {
     ECONOMIC("economic"),
     EXECUTIVE("executive"),
@@ -11,6 +13,10 @@ public enum SeatType {
 
     SeatType(String value) {
         this.value = value;
+    }
+
+    public String value() {
+        return value;
     }
 
     public static SeatType of(String aString) {
@@ -26,5 +32,10 @@ public enum SeatType {
         public InvalidSeatTypeException() {
             super("Invalid seat type");
         }
+    }
+
+    @Override
+    public String toString() {
+        return value.toLowerCase(Locale.ROOT);
     }
 }

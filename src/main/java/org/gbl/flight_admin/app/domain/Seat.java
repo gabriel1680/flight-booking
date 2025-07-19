@@ -37,7 +37,7 @@ public class Seat {
     }
 
     public String type() {
-        return type.toString();
+        return type.value();
     }
 
     public boolean isAvailable() {
