@@ -1,4 +1,4 @@
-package org.gbl.flight_admin.in.http.advice;
+package org.gbl.flight_admin.in.http.controller.advice;
 
 import org.gbl.shared.application.ApplicationException;
 import org.gbl.shared.application.NotFoundException;
@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 @ControllerAdvice
-public class FlightControllerAdvice {
+public class GlobalControllerAdvice {
 
     @ExceptionHandler(DomainException.class)
     public ResponseEntity<String> domain(DomainException e) {
