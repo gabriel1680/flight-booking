@@ -1,5 +1,6 @@
 package org.gbl.flight_admin.in.http;
 
+import org.gbl.flight_admin.config.WebServerConfiguration;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -7,6 +8,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class SpringRestApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(SpringRestApplication.class, args);
+        SpringApplication.run(WebServerConfiguration.class, args);
     }
 }
