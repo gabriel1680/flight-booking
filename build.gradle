@@ -3,6 +3,7 @@ plugins {
 	id 'org.springframework.boot' version '3.5.3'
 	id 'io.spring.dependency-management' version '1.1.7'
 	id 'org.springframework.cloud.contract' version '4.3.0'
+	id 'org.liquibase.gradle' version '2.2.1'
 }
 
 group = 'org.gbl'
@@ -38,17 +39,17 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'io.sentry:sentry-spring-boot-starter-jakarta'
-	implementation 'org.flywaydb:flyway-core'
-	implementation 'org.flywaydb:flyway-database-postgresql'
+	implementation 'org.projectlombok:lombok:1.18.38'
+
+	liquibaseRuntime 'org.liquibase:liquibase-core'
+	liquibaseRuntime 'org.postgresql:postgresql'
+
 	implementation 'org.springframework.modulith:spring-modulith-events-api'
 	implementation 'org.springframework.modulith:spring-modulith-starter-core'
 	implementation 'org.springframework.modulith:spring-modulith-starter-jpa'
-	implementation 'org.mapstruct:mapstruct:1.6.3'
-
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	developmentOnly 'org.springframework.boot:spring-boot-docker-compose'
 
-	runtimeOnly 'com.h2database:h2'
 	runtimeOnly 'io.micrometer:micrometer-registry-otlp'
 	runtimeOnly 'org.postgresql:postgresql'
 	runtimeOnly 'org.springframework.modulith:spring-modulith-actuator'
@@ -74,6 +75,19 @@ dependencyManagement {
 }
 
 contracts {
+}
+
+liquibase {
+	activities {
+		main {
+			changeLogFile 'src/main/resources/db/changelog/db.changelog-master.yaml'  // or .xml
+			url 'jdbc:postgresql://localhost:5432/your_db'
+			username 'your_user'
+			password 'your_password'
+			driver 'org.postgresql.Driver'
+		}
+	}
+	runList = 'main'
 }
 
 tasks.named('contractTest') {
