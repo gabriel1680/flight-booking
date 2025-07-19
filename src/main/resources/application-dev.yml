@@ -1,0 +1,22 @@
+server:
+  port: 8080
+  undertow:
+    threads:
+      worker: 10
+      io: 2
+spring:
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+  datasource:
+    url: jdbc:postgresql://${postgres.host}:${postgres.port}/${postgres.database}?sslmode=allow
+
+# override prod configurations
+postgres:
+  host: 127.0.0.1
+  port: 5432
+  database: flights_db
+  username: admin
+  password: 123
+  disables_autocommit: false

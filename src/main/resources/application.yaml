@@ -1,7 +1,7 @@
 server:
   port: ${webserver.port}
   servlet:
-    context-path: /api
+    context-path: /
   compression:
     enabled: true
     mime-types: text/html,text/xml,text/javascript,application/javascript,application/json
@@ -12,14 +12,14 @@ server:
       io: 4
 
 spring:
+  profiles:
+    active: ${ENV:dev}
   application:
     name: booking
-  flyway:
+  liquibase:
     enabled: true
-  jooq:
-    sql-dialect: Postgres
   datasource:
-    url: jdbc:postgresql://${postgres.url}/${postgres.database}?sslmode=Require;TrustServerCertificate=true
+    url: jdbc:postgresql://${postgres.host}:${postgres.port}/${postgres.database}?sslmode=Require;TrustServerCertificate=true
     username: ${postgres.username}
     password: ${postgres.password}
   hikari:
@@ -37,7 +37,7 @@ spring:
     properties:
       "[hibernate.dialect]": org.hibernate.dialect.PostgreSQLDialect
       "[hibernate.generate_statics]": false
-#      "[hibernate.connection.provider_disables_autocommit]": true
+      "[hibernate.connection.provider_disables_autocommit]": ${postgres.disables_autocommit:true}
 
 management:
   otlp:
