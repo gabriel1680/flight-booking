@@ -26,7 +26,7 @@ public class PostgresSeatModel {
     @Column(columnDefinition = "VARCHAR(20)")
     public String type;
 
-    @Column(columnDefinition = "uint8 TINYINT(1)")
+    @Column(columnDefinition = "smallint")
     public int availability;
 
     @CreationTimestamp

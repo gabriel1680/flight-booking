@@ -15,10 +15,9 @@ public class PostgresFlightRepository implements FlightRepository {
 
     private final PostgresFlightMapper mapper;
 
-    public PostgresFlightRepository(FlightPostgresJPARepository jpaRepository,
-                                    PostgresFlightMapper mapper) {
+    public PostgresFlightRepository(FlightPostgresJPARepository jpaRepository) {
         this.jpaRepository = jpaRepository;
-        this.mapper = mapper;
+        this.mapper = new PostgresFlightMapper();
     }
 
     @Override

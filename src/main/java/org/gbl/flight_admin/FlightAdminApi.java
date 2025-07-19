@@ -17,7 +17,7 @@ public interface FlightAdminApi {
 
     List<FlightQueryResponse> getFlights();
 
-    record FlightQueryResponse(String id, int capacity, int seatsRemaining) {}
+    record FlightQueryResponse(String id, int capacity, int totalSeats, int availableSeats) {}
 
     GetFlightResponse getFlight(GetFlightRequest request);
 

@@ -2,10 +2,12 @@ package org.gbl.flight_admin.out.memory;
 
 import org.gbl.flight_admin.FlightAdminApi.FlightQueryResponse;
 import org.gbl.flight_admin.app.domain.Flight;
+import org.gbl.flight_admin.app.domain.Seat;
 import org.gbl.flight_admin.app.service.FlightQueryService;
 import org.gbl.flight_admin.app.service.FlightRepository;
 import org.gbl.shared.domain.Identity;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -38,8 +40,14 @@ public class InMemoryFlightRepository implements FlightRepository, FlightQuerySe
     public List<FlightQueryResponse> searchFlights() {
         return flights.values().stream().map(flight -> {
             final var capacity = flight.capacity().value();
-            final var seatsCount = flight.seats().size();
-            return new FlightQueryResponse(flight.id().value(), capacity, capacity - seatsCount);
+            final var seats = flight.seats();
+            final var availableSeats =
+                    (int) seats.stream().filter(Seat::isAvailable).count();
+            return new FlightQueryResponse(
+                    flight.id().value(),
+                    capacity,
+                    seats.size(),
+                    availableSeats);
         }).toList();
     }
 }
