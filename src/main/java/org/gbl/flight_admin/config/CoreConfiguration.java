@@ -15,8 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Configuration
-@Profile("development")
-public class DevConfiguration {
+public class CoreConfiguration {
 
     private final List<Flight> flights = new ArrayList<>();
 
@@ -27,11 +26,13 @@ public class DevConfiguration {
     }
 
     @Primary
+    @Profile("memory")
     @Bean
     public FlightRepository flightRepository() {
         return new InMemoryFlightRepository(flights);
     }
 
+    @Profile("memory")
     @Bean
     public FlightQueryService flightQueryService() {
         return new InMemoryFlightRepository(flights);
