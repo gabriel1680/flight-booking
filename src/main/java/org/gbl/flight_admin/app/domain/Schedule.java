@@ -14,7 +14,7 @@ public record Schedule(Instant boardingAt, Instant landingAt) {
         }
     }
 
-    private static class InvalidScheduleException extends DomainException {
+    public static class InvalidScheduleException extends DomainException {
         public InvalidScheduleException(String message) {
             super(message);
         }
