@@ -9,6 +9,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import java.util.function.Predicate;
 
 public class Flight {
     private final Identity id;
@@ -68,6 +69,23 @@ public class Flight {
         seats.add(Seat.create(number, type));
     }
 
+    public void bookSeats(List<String> seatIds) {
+        final var toBeReservedSeats = seats.stream()
+                .filter(seat -> seatIds.contains(seat.id().value()))
+                .toList();
+        if (toBeReservedSeats.isEmpty()) {
+            throw new UnavailableSeatsBookedException(toBeReservedSeats);
+        }
+        final var unavailableSeats = toBeReservedSeats
+                .stream()
+                .filter(Predicate.not(Seat::isAvailable))
+                .toList();
+        if (!unavailableSeats.isEmpty()) {
+            throw new UnavailableSeatsBookedException(unavailableSeats);
+        }
+        seats.forEach(Seat::book);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -84,6 +102,12 @@ public class Flight {
     public static class FlightOutOfCapacityException extends DomainException {
         public FlightOutOfCapacityException() {
             super("Flight exceeded the seats capacity");
+        }
+    }
+
+    public static class UnavailableSeatsBookedException extends DomainException {
+        public UnavailableSeatsBookedException(List<Seat> unavailableSeats) {
+            super("The seats selected are unavailable for booking: %s".formatted(unavailableSeats));
         }
     }
 }
