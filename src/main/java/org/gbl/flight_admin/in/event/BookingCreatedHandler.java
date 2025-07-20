@@ -1,6 +1,5 @@
 package org.gbl.flight_admin.in.event;
 
-
 import org.gbl.booking.event.BookingCreated;
 import org.gbl.flight_admin.FlightAdminApi;
 import org.gbl.flight_admin.FlightAdminApi.BookSeatsRequest;
@@ -18,6 +17,8 @@ public class BookingCreatedHandler {
 
     @ApplicationModuleListener
     public void handle(BookingCreated event) {
-        flightAdminApi.bookSeats(new BookSeatsRequest(event.flightId(), event.seatIds()));
+        final var request = new BookSeatsRequest(
+                event.bookingId(), event.flightId(), event.seatIds());
+        flightAdminApi.bookSeats(request);
     }
 }
