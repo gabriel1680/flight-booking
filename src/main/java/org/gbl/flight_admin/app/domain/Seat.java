@@ -56,4 +56,8 @@ public class Seat {
     public int hashCode() {
         return Objects.hashCode(id);
     }
+
+    public void book() {
+        availability.take();
+    }
 }

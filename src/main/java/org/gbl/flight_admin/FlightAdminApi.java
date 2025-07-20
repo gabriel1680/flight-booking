@@ -25,4 +25,8 @@ public interface FlightAdminApi {
 
     record GetFlightResponse(String id, int capacity, String origin, String destination,
                              Instant boardingAt, Instant landingAt, List<String> seats) {}
+
+    void bookSeats(BookSeatsRequest request);
+
+    record BookSeatsRequest(String flightId, List<String> seatIds) {}
 }

@@ -67,4 +67,11 @@ public class FlightAdminFacade implements FlightAdminApi {
                 flight.schedule().landingAt(),
                 flight.seats().stream().map(Seat::id).map(Identity::value).toList());
     }
+
+    @Override
+    public void bookSeats(BookSeatsRequest request) {
+        final var flight = getFlightFor(request.flightId());
+        flight.bookSeats(request.seatIds());
+        flightRepository.save(flight);
+    }
 }
