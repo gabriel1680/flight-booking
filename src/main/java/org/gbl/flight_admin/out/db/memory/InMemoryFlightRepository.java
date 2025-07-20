@@ -1,4 +1,4 @@
-package org.gbl.flight_admin.out.memory;
+package org.gbl.flight_admin.out.db.memory;
 
 import org.gbl.flight_admin.FlightAdminApi.FlightQueryResponse;
 import org.gbl.flight_admin.app.domain.Flight;

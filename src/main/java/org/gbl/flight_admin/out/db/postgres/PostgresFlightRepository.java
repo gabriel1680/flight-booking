@@ -1,8 +1,8 @@
-package org.gbl.flight_admin.out.postgres;
+package org.gbl.flight_admin.out.db.postgres;
 
 import org.gbl.flight_admin.app.domain.Flight;
 import org.gbl.flight_admin.app.service.FlightRepository;
-import org.gbl.flight_admin.out.postgres.mapper.PostgresFlightMapper;
+import org.gbl.flight_admin.out.db.postgres.mapper.PostgresFlightMapper;
 import org.gbl.shared.domain.Identity;
 import org.springframework.stereotype.Repository;
 

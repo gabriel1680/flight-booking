@@ -1,4 +1,4 @@
-package org.gbl.flight_admin.out.postgres.mapper;
+package org.gbl.flight_admin.out.db.postgres.mapper;
 
 import org.gbl.flight_admin.app.domain.Availability;
 import org.gbl.flight_admin.app.domain.Capacity;
@@ -8,8 +8,8 @@ import org.gbl.flight_admin.app.domain.Schedule;
 import org.gbl.flight_admin.app.domain.Seat;
 import org.gbl.flight_admin.app.domain.SeatNumber;
 import org.gbl.flight_admin.app.domain.SeatType;
-import org.gbl.flight_admin.out.postgres.model.PostgresFlightModel;
-import org.gbl.flight_admin.out.postgres.model.PostgresSeatModel;
+import org.gbl.flight_admin.out.db.postgres.model.PostgresSeatModel;
+import org.gbl.flight_admin.out.db.postgres.model.PostgresFlightModel;
 import org.gbl.shared.domain.Identity;
 
 public class PostgresFlightMapper {

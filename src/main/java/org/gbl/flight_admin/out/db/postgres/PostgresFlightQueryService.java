@@ -1,4 +1,4 @@
-package org.gbl.flight_admin.out.postgres;
+package org.gbl.flight_admin.out.db.postgres;
 
 import jakarta.persistence.EntityManager;
 import org.gbl.flight_admin.FlightAdminApi.FlightQueryResponse;

@@ -1,4 +1,4 @@
-package org.gbl.flight_admin.out.postgres.model;
+package org.gbl.flight_admin.out.db.postgres.model;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;

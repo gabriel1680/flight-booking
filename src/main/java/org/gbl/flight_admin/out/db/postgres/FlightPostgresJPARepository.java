@@ -1,6 +1,6 @@
-package org.gbl.flight_admin.out.postgres;
+package org.gbl.flight_admin.out.db.postgres;
 
-import org.gbl.flight_admin.out.postgres.model.PostgresFlightModel;
+import org.gbl.flight_admin.out.db.postgres.model.PostgresFlightModel;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
