@@ -1,4 +1,4 @@
-package org.gbl.booking.infra.http;
+package org.gbl.booking.controller;
 
 import org.gbl.booking.BookingApi;
 import org.gbl.booking.BookingApi.BookRequest;

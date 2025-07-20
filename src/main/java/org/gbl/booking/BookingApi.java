@@ -6,5 +6,13 @@ public interface BookingApi {
 
     void book(BookRequest request);
 
-    record BookRequest(String flightId, List<String> seatIds) {}
+    record BookRequest(
+            String flightId,
+            String email,
+            double price,
+            List<SeatReservationRequest> seatReservations) {
+    }
+
+    record SeatReservationRequest(String seatId, double price) {
+    }
 }
