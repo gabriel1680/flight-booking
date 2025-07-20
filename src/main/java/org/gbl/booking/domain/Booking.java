@@ -10,7 +10,7 @@ public class Booking {
     private final UUID id;
     private final UUID flightId;
     private final String email;
-    private final BookingStatus status;
+    private BookingStatus status;
     private final Collection<SeatReservation> seatReservations;
 
     public Booking(UUID id, UUID flightId, String email, BookingStatus status,
@@ -29,6 +29,14 @@ public class Booking {
 
     public void addSeatReservation(String seatId, double price) {
         seatReservations.add(new SeatReservation(seatId, price));
+    }
+
+    public void confirm() {
+        status = status.confirm();
+    }
+
+    public void fail() {
+        status = status.fail();
     }
 
     public UUID id() {

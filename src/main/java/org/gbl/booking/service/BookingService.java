@@ -1,13 +1,16 @@
 package org.gbl.booking.service;
 
 import org.gbl.booking.BookingApi;
+import org.gbl.booking.event.BookingCreated;
 import org.gbl.booking.domain.Booking;
-import org.gbl.booking.BookingCreated;
 import org.gbl.booking.repository.BookingRepository;
 import org.gbl.flight_admin.FlightAdminApi;
 import org.gbl.flight_admin.FlightAdminApi.GetFlightRequest;
+import org.gbl.flight_admin.app.event.BookingConfirmed;
+import org.gbl.flight_admin.app.event.BookingFailed;
 import org.gbl.shared.application.ApplicationException;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.modulith.events.ApplicationModuleListener;
 
 import java.util.Collection;
 
@@ -47,6 +50,31 @@ public class BookingService implements BookingApi {
     public static class UnavailableSeatsForBooking extends ApplicationException {
         public UnavailableSeatsForBooking(Collection<String> unavailableSeats) {
             super("Unavailable seats selected: %s".formatted(unavailableSeats));
+        }
+    }
+
+    @ApplicationModuleListener
+    public void on(BookingConfirmed event) {
+        final var booking = getBookingFor(event.bookingId());
+        booking.confirm();
+        bookingRepository.save(booking);
+    }
+
+    @ApplicationModuleListener
+    public void on(BookingFailed event) {
+        final var booking = getBookingFor(event.bookingId());
+        booking.fail();
+        bookingRepository.save(booking);
+    }
+
+    private Booking getBookingFor(String bookingId) {
+        return bookingRepository.findById(bookingId)
+                .orElseThrow(() -> new BookingNotFoundException(bookingId));
+    }
+
+    public static class BookingNotFoundException extends ApplicationException {
+        public BookingNotFoundException(String bookingId) {
+            super("Booking with id '%s' not found".formatted(bookingId));
         }
     }
 }
