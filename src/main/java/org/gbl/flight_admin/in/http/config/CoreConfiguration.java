@@ -3,6 +3,7 @@ package org.gbl.flight_admin.in.http.config;
 import org.gbl.flight_admin.FlightAdminApi;
 import org.gbl.flight_admin.FlightAdminFacade;
 import org.gbl.flight_admin.app.domain.Flight;
+import org.gbl.flight_admin.app.service.EventDispatcher;
 import org.gbl.flight_admin.app.service.FlightQueryService;
 import org.gbl.flight_admin.app.service.FlightRepository;
 import org.gbl.flight_admin.out.db.memory.InMemoryFlightRepository;
@@ -21,8 +22,9 @@ public class CoreConfiguration {
 
     @Bean
     public FlightAdminApi flightAdminApi(FlightRepository flightRepository,
-                                         FlightQueryService queryService) {
-        return new FlightAdminFacade(flightRepository, queryService);
+                                         FlightQueryService queryService,
+                                         EventDispatcher eventDispatcher) {
+        return new FlightAdminFacade(flightRepository, queryService, eventDispatcher);
     }
 
     @Primary

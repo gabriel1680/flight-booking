@@ -1,7 +1,7 @@
 package org.gbl.flight_admin.in.event;
 
 
-import org.gbl.booking.BookingCreated;
+import org.gbl.booking.event.BookingCreated;
 import org.gbl.flight_admin.FlightAdminApi;
 import org.gbl.flight_admin.FlightAdminApi.BookSeatsRequest;
 import org.springframework.modulith.events.ApplicationModuleListener;

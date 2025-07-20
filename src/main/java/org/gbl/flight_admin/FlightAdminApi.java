@@ -28,5 +28,5 @@ public interface FlightAdminApi {
 
     void bookSeats(BookSeatsRequest request);
 
-    record BookSeatsRequest(String flightId, List<String> seatIds) {}
+    record BookSeatsRequest(String bookingId, String flightId, List<String> seatIds) {}
 }

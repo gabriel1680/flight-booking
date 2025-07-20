@@ -1,7 +1,10 @@
 package org.gbl.flight_admin;
 
+import org.gbl.flight_admin.app.event.BookingConfirmed;
+import org.gbl.flight_admin.app.event.BookingFailed;
 import org.gbl.flight_admin.app.domain.Flight;
 import org.gbl.flight_admin.app.domain.Seat;
+import org.gbl.flight_admin.app.service.EventDispatcher;
 import org.gbl.flight_admin.app.service.FlightNotFoundException;
 import org.gbl.flight_admin.app.service.FlightQueryService;
 import org.gbl.flight_admin.app.service.FlightRepository;
@@ -13,11 +16,13 @@ public class FlightAdminFacade implements FlightAdminApi {
 
     private final FlightRepository flightRepository;
     private final FlightQueryService queryService;
+    private final EventDispatcher eventDispatcher;
 
     public FlightAdminFacade(FlightRepository flightRepository,
-                             FlightQueryService queryService) {
+                             FlightQueryService queryService, EventDispatcher eventDispatcher) {
         this.flightRepository = flightRepository;
         this.queryService = queryService;
+        this.eventDispatcher = eventDispatcher;
     }
 
     @Override
@@ -70,8 +75,13 @@ public class FlightAdminFacade implements FlightAdminApi {
 
     @Override
     public void bookSeats(BookSeatsRequest request) {
-        final var flight = getFlightFor(request.flightId());
-        flight.bookSeats(request.seatIds());
-        flightRepository.save(flight);
+        try {
+            final var flight = getFlightFor(request.flightId());
+            flight.bookSeats(request.seatIds());
+            flightRepository.save(flight);
+            eventDispatcher.dispatch(new BookingConfirmed(request.bookingId()));
+        } catch (RuntimeException e) {
+            eventDispatcher.dispatch(new BookingFailed(request.bookingId()));
+        }
     }
 }

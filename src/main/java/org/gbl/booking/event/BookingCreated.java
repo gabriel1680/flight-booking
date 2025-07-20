@@ -1,4 +1,4 @@
-package org.gbl.booking;
+package org.gbl.booking.event;
 
 import org.gbl.booking.domain.Booking;
 import org.gbl.booking.domain.SeatReservation;
