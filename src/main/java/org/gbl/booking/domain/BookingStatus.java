@@ -1,6 +1,6 @@
 package org.gbl.booking.domain;
 
-import org.gbl.shared.domain.DomainException;
+import org.gbl.kernel.domain.DomainException;
 
 public enum BookingStatus {
     PENDING,

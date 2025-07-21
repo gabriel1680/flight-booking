@@ -5,9 +5,8 @@ import org.gbl.flight_admin.app.domain.Flight;
 import org.gbl.flight_admin.app.domain.Seat;
 import org.gbl.flight_admin.app.service.FlightQueryService;
 import org.gbl.flight_admin.app.service.FlightRepository;
-import org.gbl.shared.domain.Identity;
+import org.gbl.kernel.domain.Identity;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;

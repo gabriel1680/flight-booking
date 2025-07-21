@@ -10,7 +10,7 @@ import org.gbl.flight_admin.app.domain.SeatNumber;
 import org.gbl.flight_admin.app.domain.SeatType;
 import org.gbl.flight_admin.out.db.postgres.model.PostgresSeatModel;
 import org.gbl.flight_admin.out.db.postgres.model.PostgresFlightModel;
-import org.gbl.shared.domain.Identity;
+import org.gbl.kernel.domain.Identity;
 
 public class PostgresFlightMapper {
 

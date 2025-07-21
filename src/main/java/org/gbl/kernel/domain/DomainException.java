@@ -1,4 +1,4 @@
-package org.gbl.shared.domain;
+package org.gbl.kernel.domain;
 
 public class DomainException extends RuntimeException {
     public DomainException(String message) {

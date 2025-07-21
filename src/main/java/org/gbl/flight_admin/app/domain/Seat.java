@@ -1,6 +1,6 @@
 package org.gbl.flight_admin.app.domain;
 
-import org.gbl.shared.domain.Identity;
+import org.gbl.kernel.domain.Identity;
 
 import java.util.Objects;
 

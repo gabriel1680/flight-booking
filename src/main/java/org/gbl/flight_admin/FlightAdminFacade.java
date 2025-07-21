@@ -8,7 +8,7 @@ import org.gbl.flight_admin.app.service.EventDispatcher;
 import org.gbl.flight_admin.app.service.FlightNotFoundException;
 import org.gbl.flight_admin.app.service.FlightQueryService;
 import org.gbl.flight_admin.app.service.FlightRepository;
-import org.gbl.shared.domain.Identity;
+import org.gbl.kernel.domain.Identity;
 
 import java.util.List;
 

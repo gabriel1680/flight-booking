@@ -4,7 +4,7 @@ import org.gbl.booking.domain.Booking;
 import org.gbl.booking.domain.BookingRepository;
 import org.gbl.booking.domain.BookingStatus;
 import org.gbl.booking.domain.SeatReservation;
-import org.gbl.shared.domain.Identity;
+import org.gbl.kernel.domain.Identity;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;

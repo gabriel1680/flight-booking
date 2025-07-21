@@ -1,4 +1,4 @@
-package org.gbl.shared.application;
+package org.gbl.kernel.application;
 
 public class NotFoundException extends ApplicationException {
     public NotFoundException(String message) {

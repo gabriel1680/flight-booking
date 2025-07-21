@@ -1,6 +1,6 @@
 package org.gbl.flight_admin.app.service;
 
-import org.gbl.shared.application.NotFoundException;
+import org.gbl.kernel.application.NotFoundException;
 
 public class FlightNotFoundException extends NotFoundException {
 

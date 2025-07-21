@@ -9,9 +9,8 @@ import org.gbl.flight_admin.FlightAdminApi.GetFlightRequest;
 import org.gbl.flight_admin.app.event.BookingConfirmed;
 import org.gbl.flight_admin.app.event.BookingFailed;
 import org.gbl.flight_admin.app.service.EventDispatcher;
-import org.gbl.shared.application.ApplicationException;
-import org.gbl.shared.domain.Identity;
-import org.springframework.context.ApplicationEventPublisher;
+import org.gbl.kernel.application.ApplicationException;
+import org.gbl.kernel.domain.Identity;
 import org.springframework.modulith.events.ApplicationModuleListener;
 
 import java.util.Collection;

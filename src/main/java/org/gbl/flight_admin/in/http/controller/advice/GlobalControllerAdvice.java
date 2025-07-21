@@ -1,8 +1,8 @@
 package org.gbl.flight_admin.in.http.controller.advice;
 
-import org.gbl.shared.application.ApplicationException;
-import org.gbl.shared.application.NotFoundException;
-import org.gbl.shared.domain.DomainException;
+import org.gbl.kernel.application.ApplicationException;
+import org.gbl.kernel.application.NotFoundException;
+import org.gbl.kernel.domain.DomainException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;

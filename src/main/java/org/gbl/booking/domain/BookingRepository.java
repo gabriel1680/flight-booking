@@ -1,6 +1,6 @@
 package org.gbl.booking.domain;
 
-import org.gbl.shared.domain.Identity;
+import org.gbl.kernel.domain.Identity;
 
 import java.util.Optional;
 

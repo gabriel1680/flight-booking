@@ -1,4 +1,4 @@
-package org.gbl.shared.domain;
+package org.gbl.kernel.domain;
 
 import java.util.Objects;
 import java.util.UUID;
