@@ -1,14 +1,16 @@
 package org.gbl.booking.service;
 
 import org.gbl.booking.BookingApi;
-import org.gbl.booking.event.BookingCreated;
 import org.gbl.booking.domain.Booking;
-import org.gbl.booking.repository.BookingRepository;
+import org.gbl.booking.domain.BookingRepository;
+import org.gbl.booking.event.BookingCreated;
 import org.gbl.flight_admin.FlightAdminApi;
 import org.gbl.flight_admin.FlightAdminApi.GetFlightRequest;
 import org.gbl.flight_admin.app.event.BookingConfirmed;
 import org.gbl.flight_admin.app.event.BookingFailed;
+import org.gbl.flight_admin.app.service.EventDispatcher;
 import org.gbl.shared.application.ApplicationException;
+import org.gbl.shared.domain.Identity;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.modulith.events.ApplicationModuleListener;
 
@@ -18,13 +20,13 @@ public class BookingService implements BookingApi {
 
     private final FlightAdminApi flightAdminApi;
     private final BookingRepository bookingRepository;
-    private final ApplicationEventPublisher eventPublisher;
+    private final EventDispatcher dispatcher;
 
     public BookingService(FlightAdminApi flightAdminApi, BookingRepository bookingRepository,
-                          ApplicationEventPublisher eventPublisher) {
+                          EventDispatcher dispatcher) {
         this.flightAdminApi = flightAdminApi;
         this.bookingRepository = bookingRepository;
-        this.eventPublisher = eventPublisher;
+        this.dispatcher = dispatcher;
     }
 
     @Override
@@ -43,8 +45,7 @@ public class BookingService implements BookingApi {
                                  booking.addSeatReservation(seatReservation.seatId(),
                                                             seatReservation.price()));
         bookingRepository.save(booking);
-        final var bookingCreated = new BookingCreated(booking);
-        eventPublisher.publishEvent(bookingCreated);
+        dispatcher.dispatch(new BookingCreated(booking));
     }
 
     public static class UnavailableSeatsForBooking extends ApplicationException {
@@ -68,7 +69,7 @@ public class BookingService implements BookingApi {
     }
 
     private Booking getBookingFor(String bookingId) {
-        return bookingRepository.findById(bookingId)
+        return bookingRepository.findById(Identity.of(bookingId))
                 .orElseThrow(() -> new BookingNotFoundException(bookingId));
     }
 
