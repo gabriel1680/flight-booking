@@ -11,11 +11,11 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Repository
-public class BookingJPARepositoryImpl implements BookingRepository {
+public class BookingRepositoryImpl implements BookingRepository {
 
     private final BookingJPARepository jpaRepository;
 
-    public BookingJPARepositoryImpl(BookingJPARepository jpaRepository) {
+    public BookingRepositoryImpl(BookingJPARepository jpaRepository) {
         this.jpaRepository = jpaRepository;
     }
 
@@ -27,8 +27,8 @@ public class BookingJPARepositoryImpl implements BookingRepository {
 
     private static BookingModel toModel(Booking booking) {
         var model = new BookingModel();
-        model.id = booking.id().toString();
-        model.flightId = booking.flightId().toString();
+        model.id = booking.id();
+        model.flightId = booking.flightId();
         model.email = booking.email();
         model.status = booking.status().toString();
         model.seats =
@@ -39,7 +39,7 @@ public class BookingJPARepositoryImpl implements BookingRepository {
     private static BookingSeatsModel toModel(SeatReservation seatReservation,
                                              BookingModel model) {
         var seatModel = new BookingSeatsModel();
-        seatModel.seatId = seatReservation.seatId();
+        seatModel.seatId = UUID.fromString(seatReservation.seatId());
         seatModel.price = seatReservation.price();
         seatModel.bookingId = model.id;
         return seatModel;
@@ -47,16 +47,16 @@ public class BookingJPARepositoryImpl implements BookingRepository {
 
     @Override
     public Optional<Booking> findById(Identity bookingId) {
-        return jpaRepository.findById(bookingId.uuid()).map(BookingJPARepositoryImpl::toDomain);
+        return jpaRepository.findById(bookingId.uuid()).map(BookingRepositoryImpl::toDomain);
     }
 
     private static Booking toDomain(BookingModel model) {
-        return new Booking(UUID.fromString(model.id), UUID.fromString(model.flightId),
+        return new Booking(model.id, model.flightId,
                            model.email, BookingStatus.of(model.status),
-                           model.seats.stream().map(BookingJPARepositoryImpl::todDomain).toList());
+                           model.seats.stream().map(BookingRepositoryImpl::todDomain).toList());
     }
 
     private static SeatReservation todDomain(BookingSeatsModel seatModel) {
-        return new SeatReservation(seatModel.seatId, seatModel.price);
+        return new SeatReservation(seatModel.seatId.toString(), seatModel.price);
     }
 }

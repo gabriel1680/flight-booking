@@ -10,16 +10,17 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Table(name = "bookings")
 public class BookingModel {
     @Id
     @Column(columnDefinition = "uuid")
-    public String id;
+    public UUID id;
 
     @Column(name = "flight_id", columnDefinition = "uuid")
-    public String flightId;
+    public UUID flightId;
 
     @Column(columnDefinition = "VARCHAR(25)")
     public String status;

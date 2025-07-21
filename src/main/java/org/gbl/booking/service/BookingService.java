@@ -12,9 +12,11 @@ import org.gbl.flight_admin.app.service.EventDispatcher;
 import org.gbl.kernel.application.ApplicationException;
 import org.gbl.kernel.domain.Identity;
 import org.springframework.modulith.events.ApplicationModuleListener;
+import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 
+@Service
 public class BookingService implements BookingApi {
 
     private final FlightAdminApi flightAdminApi;

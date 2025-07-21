@@ -9,7 +9,6 @@ public interface BookingApi {
     record BookRequest(
             String flightId,
             String email,
-            double price,
             List<SeatReservationRequest> seatReservations) {
     }
 
