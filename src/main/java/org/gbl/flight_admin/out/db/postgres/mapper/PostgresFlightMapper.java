@@ -12,6 +12,8 @@ import org.gbl.flight_admin.out.db.postgres.model.PostgresSeatModel;
 import org.gbl.flight_admin.out.db.postgres.model.PostgresFlightModel;
 import org.gbl.kernel.domain.Identity;
 
+import java.util.UUID;
+
 public class PostgresFlightMapper {
 
     public Flight toDomain(PostgresFlightModel model) {
@@ -26,13 +28,14 @@ public class PostgresFlightMapper {
 
     public PostgresFlightModel toModel(Flight flight) {
         final var model = new PostgresFlightModel();
-        model.id = flight.id().uuid();
+        final var flightId = flight.id().uuid();
+        model.id = flightId;
         model.capacity = flight.capacity().value();
         model.origin = flight.route().origin();
         model.destination = flight.route().destination();
         model.boardingAt = flight.schedule().boardingAt();
         model.landingAt = flight.schedule().landingAt();
-        model.seats = flight.seats().stream().map(this::toModel).toList();
+        model.seats = flight.seats().stream().map(seat -> toModel(flightId, seat)).toList();
         return model;
     }
 
@@ -45,9 +48,10 @@ public class PostgresFlightMapper {
         );
     }
 
-    public PostgresSeatModel toModel(Seat seat) {
+    public PostgresSeatModel toModel(UUID flightId, Seat seat) {
         final var model = new PostgresSeatModel();
         model.id = seat.id().uuid();
+        model.flightId = flightId;
         model.number = seat.number();
         model.type = seat.type();
         model.availability = seat.isAvailable() ? 1 : 0;
