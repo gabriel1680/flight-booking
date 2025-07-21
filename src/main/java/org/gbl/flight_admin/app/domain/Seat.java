@@ -9,7 +9,7 @@ public class Seat {
     private final Identity id;
     private final SeatNumber number;
     private final SeatType type;
-    private final Availability availability;
+    private Availability availability;
 
     private Seat(Identity id, SeatNumber number, SeatType type, Availability availability) {
         this.id = id;
@@ -26,6 +26,10 @@ public class Seat {
     public static Seat hydrate(Identity id, SeatNumber number, SeatType type,
                                Availability availability) {
         return new Seat(id, number, type, availability);
+    }
+
+    public void book() {
+        availability = availability.take();
     }
 
     public Identity id() {
@@ -55,9 +59,5 @@ public class Seat {
     @Override
     public int hashCode() {
         return Objects.hashCode(id);
-    }
-
-    public void book() {
-        availability.take();
     }
 }
