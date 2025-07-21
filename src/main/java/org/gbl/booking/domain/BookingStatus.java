@@ -9,7 +9,7 @@ public enum BookingStatus {
 
     public static BookingStatus of(String status) {
         for (var value : values()) {
-            if (value.name().toLowerCase().equals(status)) {
+            if (value.name().equals(status)) {
                 return value;
             }
         }
