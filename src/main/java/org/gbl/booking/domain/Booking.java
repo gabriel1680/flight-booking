@@ -1,5 +1,7 @@
 package org.gbl.booking.domain;
 
+import org.gbl.kernel.domain.Identity;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -7,13 +9,13 @@ import java.util.UUID;
 
 public class Booking {
 
-    private final UUID id;
+    private final Identity id;
     private final UUID flightId;
     private final String email;
     private BookingStatus status;
     private final Collection<SeatReservation> seatReservations;
 
-    public Booking(UUID id, UUID flightId, String email, BookingStatus status,
+    public Booking(Identity id, UUID flightId, String email, BookingStatus status,
                    Collection<SeatReservation> seatReservations) {
         this.id = id;
         this.flightId = flightId;
@@ -23,7 +25,7 @@ public class Booking {
     }
 
     public static Booking create(String flightId, String email) {
-        return new Booking(UUID.randomUUID(), UUID.fromString(flightId), email,
+        return new Booking(Identity.nextId(), UUID.fromString(flightId), email,
                            BookingStatus.PENDING, new ArrayList<>());
     }
 
@@ -39,7 +41,7 @@ public class Booking {
         status = status.fail();
     }
 
-    public UUID id() {
+    public Identity id() {
         return id;
     }
 
