@@ -19,7 +19,7 @@ public class Booking {
         this.flightId = flightId;
         this.email = email;
         this.status = status;
-        this.seatReservations = seatReservations;
+        this.seatReservations = new ArrayList<>(seatReservations);
     }
 
     public static Booking create(String flightId, String email) {
