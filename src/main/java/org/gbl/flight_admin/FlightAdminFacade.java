@@ -1,9 +1,9 @@
 package org.gbl.flight_admin;
 
-import org.gbl.flight_admin.app.event.BookingConfirmed;
-import org.gbl.flight_admin.app.event.BookingFailed;
 import org.gbl.flight_admin.app.domain.Flight;
 import org.gbl.flight_admin.app.domain.Seat;
+import org.gbl.flight_admin.app.event.BookingConfirmed;
+import org.gbl.flight_admin.app.event.BookingFailed;
 import org.gbl.flight_admin.app.service.EventDispatcher;
 import org.gbl.flight_admin.app.service.FlightNotFoundException;
 import org.gbl.flight_admin.app.service.FlightQueryService;
@@ -18,8 +18,8 @@ public class FlightAdminFacade implements FlightAdminApi {
     private final FlightQueryService queryService;
     private final EventDispatcher eventDispatcher;
 
-    public FlightAdminFacade(FlightRepository flightRepository,
-                             FlightQueryService queryService, EventDispatcher eventDispatcher) {
+    public FlightAdminFacade(FlightRepository flightRepository, FlightQueryService queryService,
+                             EventDispatcher eventDispatcher) {
         this.flightRepository = flightRepository;
         this.queryService = queryService;
         this.eventDispatcher = eventDispatcher;
