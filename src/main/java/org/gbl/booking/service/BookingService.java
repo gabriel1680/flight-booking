@@ -11,7 +11,7 @@ import org.gbl.flight_admin.app.event.BookingFailed;
 import org.gbl.flight_admin.app.service.EventDispatcher;
 import org.gbl.kernel.application.ApplicationException;
 import org.gbl.kernel.domain.Identity;
-import org.springframework.modulith.events.ApplicationModuleListener;
+import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -32,19 +32,19 @@ public class BookingService implements BookingApi {
 
     @Override
     public void book(BookRequest request) {
-        final var flight = flightAdminApi.getFlight(new GetFlightRequest(request.flightId()));
         final var seatIds =
                 request.seatReservations().stream().map(SeatReservationRequest::seatId).toList();
+        if (bookingRepository.bookingExistsFor(request.flightId(), seatIds)) {
+            throw new UnavailableSeatsForBooking(seatIds);
+        }
+        final var flight = flightAdminApi.getFlight(new GetFlightRequest(request.flightId()));
         final var unavailableSeats =
-                flight.seats().stream().filter(seatId -> !seatIds.contains(seatId)).toList();
+                seatIds.stream().filter(seatId -> !flight.seats().contains(seatId)).toList();
         if (!unavailableSeats.isEmpty()) {
             throw new UnavailableSeatsForBooking(unavailableSeats);
         }
         final var booking = Booking.create(request.flightId(), request.email());
-        request.seatReservations()
-                .forEach(seatReservation ->
-                                 booking.addSeatReservation(seatReservation.seatId(),
-                                                            seatReservation.price()));
+        request.seatReservations().forEach(seatReservation -> booking.addSeatReservation(seatReservation.seatId(), seatReservation.price()));
         bookingRepository.save(booking);
         dispatcher.dispatch(new BookingCreated(booking));
     }
@@ -55,14 +55,14 @@ public class BookingService implements BookingApi {
         }
     }
 
-    @ApplicationModuleListener
+    @EventListener
     public void on(BookingConfirmed event) {
         final var booking = getBookingFor(event.bookingId());
         booking.confirm();
         bookingRepository.save(booking);
     }
 
-    @ApplicationModuleListener
+    @EventListener
     public void on(BookingFailed event) {
         final var booking = getBookingFor(event.bookingId());
         booking.fail();

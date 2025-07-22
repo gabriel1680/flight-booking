@@ -7,6 +7,7 @@ import org.gbl.booking.domain.SeatReservation;
 import org.gbl.kernel.domain.Identity;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -21,8 +22,7 @@ public class BookingRepositoryImpl implements BookingRepository {
 
     @Override
     public void save(Booking booking) {
-        final var model = toModel(booking);
-        jpaRepository.save(model);
+        jpaRepository.save(toModel(booking));
     }
 
     private static BookingModel toModel(Booking booking) {
@@ -48,6 +48,12 @@ public class BookingRepositoryImpl implements BookingRepository {
     @Override
     public Optional<Booking> findById(Identity bookingId) {
         return jpaRepository.findById(bookingId.uuid()).map(BookingRepositoryImpl::toDomain);
+    }
+
+    @Override
+    public boolean bookingExistsFor(String flightId, List<String> seatIds) {
+        return jpaRepository.bookingExistsFor(UUID.fromString(flightId),
+                                              seatIds.stream().map(UUID::fromString).toList());
     }
 
     private static Booking toDomain(BookingModel model) {
