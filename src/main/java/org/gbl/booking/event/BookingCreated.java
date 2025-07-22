@@ -8,7 +8,7 @@ import java.util.List;
 public record BookingCreated(String bookingId, String flightId, List<String> seatIds) {
 
     public BookingCreated(Booking source) {
-        this(source.id().toString(), source.flightId().toString(),
+        this(source.id().value(), source.flightId().toString(),
              source.seatReservations().stream()
                      .map(SeatReservation::seatId)
                      .toList());
