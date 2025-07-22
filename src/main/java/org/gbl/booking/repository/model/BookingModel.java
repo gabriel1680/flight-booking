@@ -1,4 +1,4 @@
-package org.gbl.booking.repository;
+package org.gbl.booking.repository.model;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
