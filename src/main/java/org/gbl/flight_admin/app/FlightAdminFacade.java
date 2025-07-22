@@ -1,5 +1,6 @@
-package org.gbl.flight_admin;
+package org.gbl.flight_admin.app;
 
+import org.gbl.flight_admin.FlightAdminApi;
 import org.gbl.flight_admin.app.domain.Flight;
 import org.gbl.flight_admin.app.domain.Seat;
 import org.gbl.flight_admin.app.event.BookingConfirmed;

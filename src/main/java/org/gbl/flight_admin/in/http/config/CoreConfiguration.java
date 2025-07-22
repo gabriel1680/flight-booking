@@ -1,7 +1,7 @@
 package org.gbl.flight_admin.in.http.config;
 
 import org.gbl.flight_admin.FlightAdminApi;
-import org.gbl.flight_admin.FlightAdminFacade;
+import org.gbl.flight_admin.app.FlightAdminFacade;
 import org.gbl.flight_admin.app.domain.Flight;
 import org.gbl.flight_admin.app.service.EventDispatcher;
 import org.gbl.flight_admin.app.service.FlightQueryService;
