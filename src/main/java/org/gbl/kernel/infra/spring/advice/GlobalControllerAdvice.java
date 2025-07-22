@@ -1,4 +1,4 @@
-package org.gbl.flight_admin.in.http.controller.advice;
+package org.gbl.kernel.infra.spring.advice;
 
 import org.gbl.kernel.application.ApplicationException;
 import org.gbl.kernel.application.NotFoundException;

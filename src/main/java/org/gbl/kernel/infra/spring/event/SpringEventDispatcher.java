@@ -1,4 +1,4 @@
-package org.gbl.kernel.infra.service;
+package org.gbl.kernel.infra.spring.event;
 
 import org.gbl.flight_admin.app.service.EventDispatcher;
 import org.springframework.context.ApplicationEventPublisher;

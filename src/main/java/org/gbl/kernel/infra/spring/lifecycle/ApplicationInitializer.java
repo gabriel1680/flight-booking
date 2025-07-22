@@ -1,4 +1,4 @@
-package org.gbl.flight_admin.in.http.config;
+package org.gbl.kernel.infra.spring.lifecycle;
 
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
