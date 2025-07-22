@@ -1,6 +1,6 @@
 package org.gbl.booking;
 
-import java.util.List;
+import java.util.Collection;
 
 public interface BookingApi {
 
@@ -9,7 +9,7 @@ public interface BookingApi {
     record BookRequest(
             String flightId,
             String email,
-            List<SeatReservationRequest> seatReservations) {
+            Collection<SeatReservationRequest> seatReservations) {
     }
 
     record SeatReservationRequest(String seatId, double price) {

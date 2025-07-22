@@ -9,6 +9,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 import java.util.function.Predicate;
 
 public class Flight {
@@ -69,7 +70,7 @@ public class Flight {
         seats.add(Seat.create(number, type));
     }
 
-    public void bookSeats(List<String> seatIds) {
+    public void bookSeats(Set<String> seatIds) {
         final var toBeReservedSeats = seats.stream()
                 .filter(seat -> seatIds.contains(seat.id().value()))
                 .toList();

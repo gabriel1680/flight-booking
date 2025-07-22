@@ -11,6 +11,7 @@ import org.gbl.flight_admin.app.service.FlightRepository;
 import org.gbl.kernel.domain.Identity;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class FlightAdminFacade implements FlightAdminApi {
 
@@ -70,7 +71,7 @@ public class FlightAdminFacade implements FlightAdminApi {
                 flight.route().destination(),
                 flight.schedule().boardingAt(),
                 flight.schedule().landingAt(),
-                flight.seats().stream().map(Seat::id).map(Identity::value).toList());
+                flight.seats().stream().map(Seat::id).map(Identity::value).collect(Collectors.toSet()));
     }
 
     @Override

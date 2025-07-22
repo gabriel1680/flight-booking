@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
+import java.util.Collection;
 
 @RestController
 @RequestMapping("/admin/flights")
@@ -32,7 +32,7 @@ public class FlightController extends AdminController {
     }
 
     @GetMapping
-    public ResponseEntity<List<FlightQueryResponse>> getFlights() {
+    public ResponseEntity<Collection<FlightQueryResponse>> getFlights() {
         return ResponseEntity.ok(flightAdminApi.getFlights());
     }
 }
