@@ -4,11 +4,10 @@ import java.time.Instant;
 import java.util.Collection;
 
 public class CatalogDto {
-    public record SearchBookingCatalogQuery(int page, int size, String order,
+    public record SearchFlightsCatalogQuery(int page, int size, String order,
                                             SearchFilter filter) {}
 
-    public record SearchFilter(String origin, String destination, Instant boardingAt,
-                               Instant landingAt) {}
+    public record SearchFilter(String origin, String destination) {}
 
     public record SearchFlightsCatalogDto(String id, ItineraryDto itinerary,
                                           ScheduleDto schedule) {}
