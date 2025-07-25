@@ -4,6 +4,7 @@ import org.gbl.catalog.CatalogApi;
 import org.gbl.catalog.dto.CatalogDto.GetFlightCatalogDto;
 import org.gbl.catalog.dto.CatalogDto.Pagination;
 import org.gbl.catalog.dto.CatalogDto.SearchFilter;
+import org.gbl.catalog.dto.CatalogDto.SearchFlightsCatalogDto;
 import org.gbl.catalog.dto.CatalogDto.SearchFlightsCatalogQuery;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.query.Param;
@@ -24,7 +25,7 @@ public class CatalogController {
     }
 
     @GetMapping
-    public ResponseEntity<Pagination> searchForFlights(
+    public ResponseEntity<Pagination<SearchFlightsCatalogDto>> searchForFlights(
             @Param("origin") String origin,
             @Param("destination") String destination,
             Pageable pageable) {

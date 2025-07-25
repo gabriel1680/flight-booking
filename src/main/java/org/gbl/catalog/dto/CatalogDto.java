@@ -21,6 +21,5 @@ public class CatalogDto {
 
     public record SeatDto(String id, String number, double price, boolean isAvailable) {}
 
-    public record Pagination(int page, int total, int size,
-                             Collection<SearchFlightsCatalogDto> documents) {}
+    public record Pagination<T>(int page, int total, int size, Collection<T> documents) {}
 }

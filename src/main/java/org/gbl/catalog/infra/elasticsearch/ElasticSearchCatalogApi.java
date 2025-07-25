@@ -39,7 +39,7 @@ public class ElasticSearchCatalogApi implements CatalogApi {
     }
 
     @Override
-    public Pagination searchFlights(SearchFlightsCatalogQuery query) {
+    public Pagination<SearchFlightsCatalogDto> searchFlights(SearchFlightsCatalogQuery query) {
         final var searchQuery = NativeQuery.builder()
                 .withQuery(elkQueryOf(query))
                 .withPageable(PageRequest.of(query.page(), query.size()))
@@ -50,7 +50,7 @@ public class ElasticSearchCatalogApi implements CatalogApi {
                 .map(ElasticSearchCatalogApi::toDto)
                 .toList();
         final var total = (int) result.getTotalHits();
-        return new Pagination(query.page(), total, query.size(), documents);
+        return new Pagination<>(query.page(), total, query.size(), documents);
     }
 
     private static Query elkQueryOf(SearchFlightsCatalogQuery query) {
