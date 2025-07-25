@@ -64,8 +64,10 @@ public class ElasticSearchCatalogApi implements CatalogApi {
     }
 
     private static SearchFlightsCatalogDto toDto(FlightDocument it) {
-        return new SearchFlightsCatalogDto(it.id, new ItineraryDto(it.origin, it.destination),
-                                           new ScheduleDto(it.boardingAt, it.landingAt));
+        return new SearchFlightsCatalogDto(
+                it.id,
+                new ItineraryDto(it.origin, it.destination),
+                new ScheduleDto(it.boardingAt, it.landingAt));
     }
 
     @Override
