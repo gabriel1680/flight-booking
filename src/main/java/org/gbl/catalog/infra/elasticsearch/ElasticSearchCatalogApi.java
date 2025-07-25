@@ -6,7 +6,7 @@ import org.gbl.catalog.dto.CatalogDto.GetFlightCatalogDto;
 import org.gbl.catalog.dto.CatalogDto.ItineraryDto;
 import org.gbl.catalog.dto.CatalogDto.Pagination;
 import org.gbl.catalog.dto.CatalogDto.ScheduleDto;
-import org.gbl.catalog.dto.CatalogDto.SearchBookingCatalogQuery;
+import org.gbl.catalog.dto.CatalogDto.SearchFlightsCatalogQuery;
 import org.gbl.catalog.dto.CatalogDto.SearchFlightsCatalogDto;
 import org.gbl.catalog.dto.CatalogDto.SeatDto;
 import org.gbl.catalog.infra.elasticsearch.document.FlightDocument;
@@ -39,7 +39,7 @@ public class ElasticSearchCatalogApi implements CatalogApi {
     }
 
     @Override
-    public Pagination searchFlights(SearchBookingCatalogQuery query) {
+    public Pagination searchFlights(SearchFlightsCatalogQuery query) {
         final var searchQuery = NativeQuery.builder()
                 .withQuery(elkQueryOf(query))
                 .withPageable(PageRequest.of(query.page(), query.size()))
@@ -53,7 +53,7 @@ public class ElasticSearchCatalogApi implements CatalogApi {
         return new Pagination(query.page(), total, query.size(), documents);
     }
 
-    private static Query elkQueryOf(SearchBookingCatalogQuery query) {
+    private static Query elkQueryOf(SearchFlightsCatalogQuery query) {
         final var origin = query.filter().origin();
         final var destination = query.filter().destination();
         final var queries = asList(
