@@ -22,7 +22,7 @@ public class CatalogController {
     }
 
     @GetMapping
-    public ResponseEntity<Pagination> getFlights(
+    public ResponseEntity<Pagination> searchForFlights(
             @Param("origin") String origin,
             @Param("destination") String destination,
             Pageable pageable) {
