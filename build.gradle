@@ -1,100 +1,100 @@
 plugins {
-	id 'java'
-	id 'org.springframework.boot' version '3.5.3'
-	id 'io.spring.dependency-management' version '1.1.7'
-	id 'org.springframework.cloud.contract' version '4.3.0'
-	id 'org.liquibase.gradle' version '2.2.1'
+    id 'java'
+    id 'org.springframework.boot' version '3.5.3'
+    id 'io.spring.dependency-management' version '1.1.7'
+    id 'org.springframework.cloud.contract' version '4.3.0'
+    id 'org.liquibase.gradle' version '2.2.1'
 }
 
 group = 'org.gbl'
 version = '0.0.1-SNAPSHOT'
 
 java {
-	toolchain {
-		languageVersion = JavaLanguageVersion.of(21)
-	}
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
 }
 
 configurations {
-	compileOnly {
-		extendsFrom annotationProcessor
-	}
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
 }
 
 repositories {
-	mavenCentral()
+    mavenCentral()
 }
 
 ext {
-	set('sentryVersion', "8.16.0")
-	set('springCloudVersion', "2025.0.0")
-	set('springModulithVersion', "1.4.1")
+    set('sentryVersion', "8.16.0")
+    set('springCloudVersion', "2025.0.0")
+    set('springModulithVersion', "1.4.1")
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter'
-	implementation 'org.springframework.boot:spring-boot-starter-actuator'
-	implementation 'org.springframework.boot:spring-boot-starter-amqp'
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-	implementation 'org.springframework.data:spring-data-elasticsearch:5.1.2'
-	implementation 'io.sentry:sentry-spring-boot-starter-jakarta'
-	implementation 'org.projectlombok:lombok:1.18.38'
+    implementation 'org.springframework.boot:spring-boot-starter'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'org.springframework.boot:spring-boot-starter-amqp'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.data:spring-data-elasticsearch:5.1.2'
+    implementation 'io.sentry:sentry-spring-boot-starter-jakarta'
+    implementation 'org.projectlombok:lombok:1.18.38'
 
-	liquibaseRuntime 'org.liquibase:liquibase-core'
-	liquibaseRuntime 'org.postgresql:postgresql'
+    liquibaseRuntime 'org.liquibase:liquibase-core'
+    liquibaseRuntime 'org.postgresql:postgresql'
 
-	implementation 'org.springframework.modulith:spring-modulith-events-api'
-	implementation 'org.springframework.modulith:spring-modulith-starter-core'
-	implementation 'org.springframework.modulith:spring-modulith-starter-jpa'
-	developmentOnly 'org.springframework.boot:spring-boot-devtools'
-	developmentOnly 'org.springframework.boot:spring-boot-docker-compose'
+    implementation 'org.springframework.modulith:spring-modulith-events-api'
+    implementation 'org.springframework.modulith:spring-modulith-starter-core'
+    implementation 'org.springframework.modulith:spring-modulith-starter-jpa'
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    developmentOnly 'org.springframework.boot:spring-boot-docker-compose'
 
-	runtimeOnly 'io.micrometer:micrometer-registry-otlp'
-	runtimeOnly 'org.postgresql:postgresql'
-	runtimeOnly 'org.springframework.modulith:spring-modulith-actuator'
-	runtimeOnly 'org.springframework.modulith:spring-modulith-events-amqp'
-	runtimeOnly 'org.springframework.modulith:spring-modulith-observability'
+    runtimeOnly 'io.micrometer:micrometer-registry-otlp'
+    runtimeOnly 'org.postgresql:postgresql'
+    runtimeOnly 'org.springframework.modulith:spring-modulith-actuator'
+    runtimeOnly 'org.springframework.modulith:spring-modulith-events-amqp'
+    runtimeOnly 'org.springframework.modulith:spring-modulith-observability'
 
-	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
-	annotationProcessor 'org.mapstruct:mapstruct-processor:1.6.3'
+    annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+    annotationProcessor 'org.mapstruct:mapstruct-processor:1.6.3'
 
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	testImplementation 'org.springframework.amqp:spring-rabbit-test'
-	testImplementation 'org.springframework.cloud:spring-cloud-starter-contract-verifier'
-	testImplementation 'org.springframework.modulith:spring-modulith-starter-test'
-	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.amqp:spring-rabbit-test'
+    testImplementation 'org.springframework.cloud:spring-cloud-starter-contract-verifier'
+    testImplementation 'org.springframework.modulith:spring-modulith-starter-test'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
 dependencyManagement {
-	imports {
-		mavenBom "org.springframework.modulith:spring-modulith-bom:${springModulithVersion}"
-		mavenBom "io.sentry:sentry-bom:${sentryVersion}"
-		mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
-	}
+    imports {
+        mavenBom "org.springframework.modulith:spring-modulith-bom:${springModulithVersion}"
+        mavenBom "io.sentry:sentry-bom:${sentryVersion}"
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+    }
 }
 
 contracts {
 }
 
 liquibase {
-	activities {
-		main {
-			changeLogFile 'src/main/resources/db/changelog/db.changelog-master.yaml'  // or .xml
-			url 'jdbc:postgresql://localhost:5432/your_db'
-			username 'your_user'
-			password 'your_password'
-			driver 'org.postgresql.Driver'
-		}
-	}
-	runList = 'main'
+    activities {
+        main {
+            changeLogFile 'src/main/resources/db/changelog/db.changelog-master.yaml'
+            url '${spring.datasource.url}'
+            username '${spring.datasource.username}'
+            password '${spring.datasource.password}'
+            driver 'org.postgresql.Driver'
+        }
+    }
+    runList = 'main'
 }
 
 tasks.named('contractTest') {
-	useJUnitPlatform()
+    useJUnitPlatform()
 }
 
 tasks.named('test') {
-	useJUnitPlatform()
+    useJUnitPlatform()
 }
