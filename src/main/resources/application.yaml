@@ -39,6 +39,18 @@ spring:
       "[hibernate.generate_statics]": false
       "[hibernate.connection.provider_disables_autocommit]": ${postgres.disables_autocommit:true}
 
+kafka:
+  auto-create-topics: false
+  pool-timeout: 1_000
+  consumers:
+    flights:
+      auto-offset-reset: earliest
+      concurrency: 1
+      id: kafka-listener-flights
+      topics: adm_flights_postgres.adm_flights.flights
+      group-id: flights-catalog
+      max-attempts: 4
+
 management:
   otlp:
     metrics:
