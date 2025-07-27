@@ -1,4 +1,4 @@
-package org.gbl.catalog.infra.http;
+package org.gbl.catalog.http;
 
 import org.gbl.catalog.CatalogApi;
 import org.gbl.catalog.dto.CatalogDto.GetFlightCatalogDto;

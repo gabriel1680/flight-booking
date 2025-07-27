@@ -1,4 +1,4 @@
-package org.gbl.catalog.infra.kafka.connect;
+package org.gbl.catalog.kafka;
 
 public record MessageValue<T>(Payload<T> payload) {
 }

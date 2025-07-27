@@ -1,4 +1,4 @@
-package org.gbl.catalog.infra.elasticsearch.document;
+package org.gbl.catalog.elasticsearch.document;
 
 public class SeatDocument {
     public String id;

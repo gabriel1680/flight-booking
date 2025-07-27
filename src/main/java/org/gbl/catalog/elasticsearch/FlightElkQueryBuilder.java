@@ -1,4 +1,4 @@
-package org.gbl.catalog.infra.elasticsearch;
+package org.gbl.catalog.elasticsearch;
 
 import co.elastic.clients.elasticsearch._types.query_dsl.Query;
 import co.elastic.clients.elasticsearch._types.query_dsl.QueryBuilders;

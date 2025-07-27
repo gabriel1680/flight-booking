@@ -1,10 +1,10 @@
-package org.gbl.catalog.infra.kafka.connect;
+package org.gbl.catalog.kafka;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.gbl.catalog.application.CatalogService;
-import org.gbl.catalog.application.CatalogService.FlightCreatedDto;
+import org.gbl.catalog.service.CatalogCommandService;
+import org.gbl.catalog.service.CatalogCommandService.FlightCreatedDto;
 import org.springframework.kafka.annotation.DltHandler;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.annotation.RetryableTopic;
@@ -22,9 +22,9 @@ public class KafkaConnectAdminListener {
     private static final TypeReference<MessageValue<FlightCreatedDto>> FLIGHT_CREATED_MESSAGE_TYPE = new TypeReference<>() {
     };
 
-    private final CatalogService catalogService;
+    private final CatalogCommandService catalogService;
 
-    public KafkaConnectAdminListener(CatalogService catalogService) {
+    public KafkaConnectAdminListener(CatalogCommandService catalogService) {
         this.catalogService = catalogService;
     }
 

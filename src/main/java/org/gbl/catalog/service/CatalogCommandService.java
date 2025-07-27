@@ -1,19 +1,22 @@
-package org.gbl.catalog.application;
+package org.gbl.catalog.service;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.gbl.catalog.infra.elasticsearch.document.FlightDocument;
-import org.gbl.catalog.infra.elasticsearch.document.SeatDocument;
+import org.gbl.catalog.elasticsearch.FlightElkRepository;
+import org.gbl.catalog.elasticsearch.document.FlightDocument;
+import org.gbl.catalog.elasticsearch.document.SeatDocument;
+import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 import java.util.Collection;
 
-public class CatalogService {
-    private static final Logger LOG = LogManager.getLogger(CatalogService.class);
+@Service
+public class CatalogCommandService {
+    private static final Logger LOG = LogManager.getLogger(CatalogCommandService.class);
 
-    private final FlightDocumentRepository repository;
+    private final FlightElkRepository repository;
 
-    public CatalogService(FlightDocumentRepository repository) {
+    public CatalogCommandService(FlightElkRepository repository) {
         this.repository = repository;
     }
 
@@ -29,7 +32,7 @@ public class CatalogService {
         document.boardingAt = dto.boardingAt();
         document.landingAt = dto.landingAt();
         document.available = dto.seats.stream().anyMatch(seat -> seat.availability == 1);
-        document.seats = dto.seats.stream().map(CatalogService::toDocument).toList();
+        document.seats = dto.seats.stream().map(CatalogCommandService::toDocument).toList();
         document.createdAt = dto.createdAt();
         document.updatedAt = dto.updatedAt();
         return document;
@@ -44,7 +47,7 @@ public class CatalogService {
     }
 
     public void delete(String id) {
-        repository.getOf(id).ifPresentOrElse(
+        repository.findById(id).ifPresentOrElse(
                 repository::delete,
                 () -> LOG.error("Flight document not found for delete with id '{}'", id));
     }
