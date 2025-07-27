@@ -23,6 +23,10 @@ public class FlightDocument {
 
     public Instant landingAt;
 
+    public Instant createdAt;
+
+    public Instant updatedAt;
+
     @Field(type = FieldType.Nested, includeInParent = true)
     public Collection<SeatDocument> seats;
 }
