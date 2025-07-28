@@ -1,7 +1,7 @@
-package org.gbl.catalog.app.mapper;
+package org.gbl.catalog.app.handler;
 
 import org.gbl.catalog.CatalogDto.FlightDto;
-import org.gbl.catalog.app.service.CatalogCommandHandler.CreateFlightCommand;
+import org.gbl.catalog.app.handler.CatalogCommandHandler.CreateFlightCommand;
 import org.mapstruct.Mapper;
 
 @Mapper

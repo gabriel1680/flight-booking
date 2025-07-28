@@ -1,4 +1,4 @@
-package org.gbl.catalog.app.service;
+package org.gbl.catalog.app.handler;
 
 import co.elastic.clients.elasticsearch._types.query_dsl.Query;
 import org.gbl.catalog.CatalogDto.GetFlightCatalogDto;

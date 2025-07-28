@@ -1,4 +1,4 @@
-package org.gbl.catalog.app.service;
+package org.gbl.catalog.app.handler;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
