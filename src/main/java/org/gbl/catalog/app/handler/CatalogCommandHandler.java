@@ -31,14 +31,14 @@ public class CatalogCommandHandler {
         document.destination = command.destination();
         document.boardingAt = command.boardingAt();
         document.landingAt = command.landingAt();
-        document.available = command.seats.stream().anyMatch(seat -> seat.availability == 1);
-        document.seats = command.seats.stream().map(CatalogCommandHandler::toDocument).toList();
+        document.available = command.seats().stream().anyMatch(seat -> seat.availability() == 1);
+        document.seats = command.seats().stream().map(CatalogCommandHandler::toDocument).toList();
         document.createdAt = command.createdAt();
         document.updatedAt = command.updatedAt();
         return document;
     }
 
-    private static SeatDocument toDocument(SeatCreatedDto seat) {
+    private static SeatDocument toDocument(CreateSeatDto seat) {
         final var seatDocument = new SeatDocument();
         seatDocument.id = seat.id();
         seatDocument.number = seat.number();
@@ -60,9 +60,9 @@ public class CatalogCommandHandler {
             String destination,
             Instant boardingAt,
             Instant landingAt,
-            Collection<SeatCreatedDto> seats,
+            Collection<CreateSeatDto> seats,
             Instant createdAt,
             Instant updatedAt) {}
 
-    public record SeatCreatedDto(String id, String number, int availability) {}
+    public record CreateSeatDto(String id, String number, int availability) {}
 }
