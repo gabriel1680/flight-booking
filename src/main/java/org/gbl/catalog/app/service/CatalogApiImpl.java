@@ -8,6 +8,7 @@ import org.gbl.catalog.CatalogDto.SearchFlightsCatalogDto;
 import org.gbl.catalog.CatalogDto.SearchFlightsCatalogQuery;
 import org.gbl.catalog.app.mapper.FlightDtoMapper;
 import org.gbl.catalog.app.service.CatalogCommandHandler.DeleteFlightCommand;
+import org.gbl.catalog.app.service.CatalogQueryHandler.GetFlightQuery;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -33,7 +34,7 @@ public class CatalogApiImpl implements CatalogApi {
 
     @Override
     public GetFlightCatalogDto getFlight(String id) {
-        return queryHandler.handle(id);
+        return queryHandler.handle(new GetFlightQuery(id));
     }
 
     @Override

@@ -67,8 +67,8 @@ public class CatalogQueryHandler {
                 new ScheduleDto(it.boardingAt, it.landingAt));
     }
 
-    public GetFlightCatalogDto handle(String id) {
-        return flightElkRepository.findById(id)
+    public GetFlightCatalogDto handle(GetFlightQuery query) {
+        return flightElkRepository.findById(query.id())
                 .map(CatalogQueryHandler::toFlightDto)
                 .orElseThrow(() -> new NotFoundException("Flight not found )="));
     }
@@ -86,4 +86,6 @@ public class CatalogQueryHandler {
                 .map(seat -> new SeatDto(seat.id, seat.number, seat.price, seat.availability == 1))
                 .toList();
     }
+
+    public record GetFlightQuery(String id) {}
 }
