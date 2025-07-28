@@ -1,6 +1,6 @@
 package org.gbl.kernel.infra.spring.event;
 
-import org.gbl.flight_admin.app.service.EventDispatcher;
+import org.gbl.admin.app.service.EventDispatcher;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 
