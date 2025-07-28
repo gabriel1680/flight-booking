@@ -32,7 +32,7 @@ public class KafkaConnectAdminListener {
 
     @KafkaListener(
             concurrency = "${kafka.consumers.flights.concurrency}",
-            containerFactory = "kafkaListenerFactory",
+            containerFactory = "kafkaListenerContainerFactory",
             topics = "${kafka.consumers.flights.topics}",
             groupId = "${kafka.consumers.flights.group-flightId}",
             id = "${kafka.consumers.flights.flightId}",
