@@ -1,11 +1,11 @@
 package org.gbl.catalog.http;
 
 import org.gbl.catalog.CatalogApi;
-import org.gbl.catalog.dto.CatalogDto.GetFlightCatalogDto;
-import org.gbl.catalog.dto.CatalogDto.Pagination;
-import org.gbl.catalog.dto.CatalogDto.SearchFilter;
-import org.gbl.catalog.dto.CatalogDto.SearchFlightsCatalogDto;
-import org.gbl.catalog.dto.CatalogDto.SearchFlightsCatalogQuery;
+import org.gbl.catalog.CatalogDto.GetFlightCatalogDto;
+import org.gbl.catalog.CatalogDto.Pagination;
+import org.gbl.catalog.CatalogDto.SearchFilter;
+import org.gbl.catalog.CatalogDto.SearchFlightsCatalogDto;
+import org.gbl.catalog.CatalogDto.SearchFlightsCatalogQuery;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;

@@ -1,4 +1,4 @@
-package org.gbl.catalog.dto;
+package org.gbl.catalog;
 
 import java.time.Instant;
 import java.util.Collection;

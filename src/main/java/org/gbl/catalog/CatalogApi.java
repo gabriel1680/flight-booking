@@ -1,9 +1,9 @@
 package org.gbl.catalog;
 
-import org.gbl.catalog.dto.CatalogDto.GetFlightCatalogDto;
-import org.gbl.catalog.dto.CatalogDto.Pagination;
-import org.gbl.catalog.dto.CatalogDto.SearchFlightsCatalogDto;
-import org.gbl.catalog.dto.CatalogDto.SearchFlightsCatalogQuery;
+import org.gbl.catalog.CatalogDto.GetFlightCatalogDto;
+import org.gbl.catalog.CatalogDto.Pagination;
+import org.gbl.catalog.CatalogDto.SearchFlightsCatalogDto;
+import org.gbl.catalog.CatalogDto.SearchFlightsCatalogQuery;
 import org.gbl.catalog.service.CatalogCommandService.FlightCreatedDto;
 
 public interface CatalogApi {

@@ -1,13 +1,13 @@
 package org.gbl.catalog.service;
 
 import co.elastic.clients.elasticsearch._types.query_dsl.Query;
-import org.gbl.catalog.dto.CatalogDto.GetFlightCatalogDto;
-import org.gbl.catalog.dto.CatalogDto.ItineraryDto;
-import org.gbl.catalog.dto.CatalogDto.Pagination;
-import org.gbl.catalog.dto.CatalogDto.ScheduleDto;
-import org.gbl.catalog.dto.CatalogDto.SearchFlightsCatalogDto;
-import org.gbl.catalog.dto.CatalogDto.SearchFlightsCatalogQuery;
-import org.gbl.catalog.dto.CatalogDto.SeatDto;
+import org.gbl.catalog.CatalogDto.GetFlightCatalogDto;
+import org.gbl.catalog.CatalogDto.ItineraryDto;
+import org.gbl.catalog.CatalogDto.Pagination;
+import org.gbl.catalog.CatalogDto.ScheduleDto;
+import org.gbl.catalog.CatalogDto.SearchFlightsCatalogDto;
+import org.gbl.catalog.CatalogDto.SearchFlightsCatalogQuery;
+import org.gbl.catalog.CatalogDto.SeatDto;
 import org.gbl.catalog.elasticsearch.FlightElkQueryBuilder;
 import org.gbl.catalog.elasticsearch.FlightElkRepository;
 import org.gbl.catalog.elasticsearch.document.FlightDocument;
