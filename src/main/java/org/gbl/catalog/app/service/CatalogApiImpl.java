@@ -7,43 +7,42 @@ import org.gbl.catalog.CatalogDto.Pagination;
 import org.gbl.catalog.CatalogDto.SearchFlightsCatalogDto;
 import org.gbl.catalog.CatalogDto.SearchFlightsCatalogQuery;
 import org.gbl.catalog.app.mapper.FlightDtoMapper;
-import org.gbl.catalog.app.service.CatalogCommandService.CreateFlightCommand;
-import org.gbl.catalog.app.service.CatalogCommandService.DeleteFlightCommand;
+import org.gbl.catalog.app.service.CatalogCommandHandler.DeleteFlightCommand;
 import org.springframework.stereotype.Service;
 
 @Service
 public class CatalogApiImpl implements CatalogApi {
 
-    private final CatalogQueryService queryService;
-    private final CatalogCommandService commandService;
     private final FlightDtoMapper mapper;
+    private final CatalogCommandHandler commandHandler;
+    private final CatalogQueryHandler queryHandler;
 
     public CatalogApiImpl(
-            CatalogQueryService queryService,
-            CatalogCommandService commandService,
+            CatalogQueryHandler queryHandler,
+            CatalogCommandHandler commandHandler,
             FlightDtoMapper mapper) {
-        this.queryService = queryService;
-        this.commandService = commandService;
+        this.queryHandler = queryHandler;
+        this.commandHandler = commandHandler;
         this.mapper = mapper;
     }
 
     @Override
     public Pagination<SearchFlightsCatalogDto> searchFlights(SearchFlightsCatalogQuery query) {
-        return queryService.searchFlights(query);
+        return queryHandler.handle(query);
     }
 
     @Override
     public GetFlightCatalogDto getFlight(String id) {
-        return queryService.getFlight(id);
+        return queryHandler.handle(id);
     }
 
     @Override
     public void createFlight(FlightDto dto) {
-        commandService.handle(mapper.toCommand(dto));
+        commandHandler.handle(mapper.toCommand(dto));
     }
 
     @Override
     public void deleteFlightFor(String flightId) {
-        commandService.handle(new DeleteFlightCommand(flightId));
+        commandHandler.handle(new DeleteFlightCommand(flightId));
     }
 }

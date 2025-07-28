@@ -1,6 +1,6 @@
 package org.gbl.catalog;
 
-import org.gbl.catalog.app.service.CatalogCommandService.SeatCreatedDto;
+import org.gbl.catalog.app.service.CatalogCommandHandler.SeatCreatedDto;
 
 import java.time.Instant;
 import java.util.Collection;

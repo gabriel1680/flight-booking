@@ -25,18 +25,18 @@ import java.util.List;
 import static java.util.Arrays.asList;
 
 @Service
-public class CatalogQueryService {
+public class CatalogQueryHandler {
 
     private final SearchOperations searchOperations;
     private final FlightElkRepository flightElkRepository;
 
-    public CatalogQueryService(SearchOperations searchOperations,
+    public CatalogQueryHandler(SearchOperations searchOperations,
                                FlightElkRepository flightElkRepository) {
         this.searchOperations = searchOperations;
         this.flightElkRepository = flightElkRepository;
     }
 
-    public Pagination<SearchFlightsCatalogDto> searchFlights(SearchFlightsCatalogQuery query) {
+    public Pagination<SearchFlightsCatalogDto> handle(SearchFlightsCatalogQuery query) {
         final var searchQuery = NativeQuery.builder()
                 .withQuery(elkQueryOf(query))
                 .withPageable(PageRequest.of(query.page(), query.size()))
@@ -44,7 +44,7 @@ public class CatalogQueryService {
         final var result = searchOperations.search(searchQuery, FlightDocument.class);
         final var documents = result.getSearchHits().stream()
                 .map(SearchHit::getContent)
-                .map(CatalogQueryService::toDto)
+                .map(CatalogQueryHandler::toDto)
                 .toList();
         final var total = (int) result.getTotalHits();
         return new Pagination<>(query.page(), total, query.size(), documents);
@@ -67,9 +67,9 @@ public class CatalogQueryService {
                 new ScheduleDto(it.boardingAt, it.landingAt));
     }
 
-    public GetFlightCatalogDto getFlight(String id) {
+    public GetFlightCatalogDto handle(String id) {
         return flightElkRepository.findById(id)
-                .map(CatalogQueryService::toFlightDto)
+                .map(CatalogQueryHandler::toFlightDto)
                 .orElseThrow(() -> new NotFoundException("Flight not found )="));
     }
 

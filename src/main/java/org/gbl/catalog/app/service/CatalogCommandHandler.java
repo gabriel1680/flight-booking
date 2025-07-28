@@ -11,12 +11,12 @@ import java.time.Instant;
 import java.util.Collection;
 
 @Service
-public class CatalogCommandService {
-    private static final Logger LOG = LogManager.getLogger(CatalogCommandService.class);
+public class CatalogCommandHandler {
+    private static final Logger LOG = LogManager.getLogger(CatalogCommandHandler.class);
 
     private final FlightElkRepository repository;
 
-    public CatalogCommandService(FlightElkRepository repository) {
+    public CatalogCommandHandler(FlightElkRepository repository) {
         this.repository = repository;
     }
 
@@ -32,7 +32,7 @@ public class CatalogCommandService {
         document.boardingAt = command.boardingAt();
         document.landingAt = command.landingAt();
         document.available = command.seats.stream().anyMatch(seat -> seat.availability == 1);
-        document.seats = command.seats.stream().map(CatalogCommandService::toDocument).toList();
+        document.seats = command.seats.stream().map(CatalogCommandHandler::toDocument).toList();
         document.createdAt = command.createdAt();
         document.updatedAt = command.updatedAt();
         return document;
