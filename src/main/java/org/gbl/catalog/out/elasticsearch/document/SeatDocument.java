@@ -1,4 +1,4 @@
-package org.gbl.catalog.elasticsearch.document;
+package org.gbl.catalog.out.elasticsearch.document;
 
 public class SeatDocument {
     public String id;

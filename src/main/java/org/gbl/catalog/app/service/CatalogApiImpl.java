@@ -1,13 +1,14 @@
-package org.gbl.catalog;
+package org.gbl.catalog.app.service;
 
+import org.gbl.catalog.CatalogApi;
+import org.gbl.catalog.CatalogDto.FlightDto;
 import org.gbl.catalog.CatalogDto.GetFlightCatalogDto;
 import org.gbl.catalog.CatalogDto.Pagination;
 import org.gbl.catalog.CatalogDto.SearchFlightsCatalogDto;
 import org.gbl.catalog.CatalogDto.SearchFlightsCatalogQuery;
-import org.gbl.catalog.service.CatalogCommandService;
-import org.gbl.catalog.service.CatalogCommandService.CreateFlightCommand;
-import org.gbl.catalog.service.CatalogCommandService.DeleteFlightCommand;
-import org.gbl.catalog.service.CatalogQueryService;
+import org.gbl.catalog.app.mapper.FlightDtoMapper;
+import org.gbl.catalog.app.service.CatalogCommandService.CreateFlightCommand;
+import org.gbl.catalog.app.service.CatalogCommandService.DeleteFlightCommand;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -15,10 +16,15 @@ public class CatalogApiImpl implements CatalogApi {
 
     private final CatalogQueryService queryService;
     private final CatalogCommandService commandService;
+    private final FlightDtoMapper mapper;
 
-    public CatalogApiImpl(CatalogQueryService queryService, CatalogCommandService commandService) {
+    public CatalogApiImpl(
+            CatalogQueryService queryService,
+            CatalogCommandService commandService,
+            FlightDtoMapper mapper) {
         this.queryService = queryService;
         this.commandService = commandService;
+        this.mapper = mapper;
     }
 
     @Override
@@ -32,8 +38,8 @@ public class CatalogApiImpl implements CatalogApi {
     }
 
     @Override
-    public void createFlight(CreateFlightCommand dto) {
-        commandService.handle(dto);
+    public void createFlight(FlightDto dto) {
+        commandService.handle(mapper.toCommand(dto));
     }
 
     @Override

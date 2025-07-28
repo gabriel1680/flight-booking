@@ -1,5 +1,7 @@
 package org.gbl.catalog;
 
+import org.gbl.catalog.app.service.CatalogCommandService.SeatCreatedDto;
+
 import java.time.Instant;
 import java.util.Collection;
 
@@ -22,4 +24,14 @@ public class CatalogDto {
     public record SeatDto(String id, String number, double price, boolean isAvailable) {}
 
     public record Pagination<T>(int page, int total, int size, Collection<T> documents) {}
+
+    public record FlightDto(
+            String id,
+            String origin,
+            String destination,
+            Instant boardingAt,
+            Instant landingAt,
+            Collection<SeatCreatedDto> seats,
+            Instant createdAt,
+            Instant updatedAt) {}
 }

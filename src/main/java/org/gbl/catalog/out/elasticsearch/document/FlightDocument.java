@@ -1,4 +1,4 @@
-package org.gbl.catalog.elasticsearch.document;
+package org.gbl.catalog.out.elasticsearch.document;
 
 import jakarta.persistence.Id;
 import org.springframework.data.elasticsearch.annotations.Document;

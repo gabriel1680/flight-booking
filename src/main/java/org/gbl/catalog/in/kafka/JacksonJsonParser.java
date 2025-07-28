@@ -1,4 +1,4 @@
-package org.gbl.catalog.kafka;
+package org.gbl.catalog.in.kafka;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;

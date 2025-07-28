@@ -1,10 +1,10 @@
-package org.gbl.catalog.service;
+package org.gbl.catalog.app.service;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.gbl.catalog.elasticsearch.FlightElkRepository;
-import org.gbl.catalog.elasticsearch.document.FlightDocument;
-import org.gbl.catalog.elasticsearch.document.SeatDocument;
+import org.gbl.catalog.out.elasticsearch.FlightElkRepository;
+import org.gbl.catalog.out.elasticsearch.document.FlightDocument;
+import org.gbl.catalog.out.elasticsearch.document.SeatDocument;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;

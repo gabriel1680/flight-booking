@@ -1,4 +1,4 @@
-package org.gbl.catalog.service;
+package org.gbl.catalog.app.service;
 
 import co.elastic.clients.elasticsearch._types.query_dsl.Query;
 import org.gbl.catalog.CatalogDto.GetFlightCatalogDto;
@@ -8,10 +8,10 @@ import org.gbl.catalog.CatalogDto.ScheduleDto;
 import org.gbl.catalog.CatalogDto.SearchFlightsCatalogDto;
 import org.gbl.catalog.CatalogDto.SearchFlightsCatalogQuery;
 import org.gbl.catalog.CatalogDto.SeatDto;
-import org.gbl.catalog.elasticsearch.FlightElkQueryBuilder;
-import org.gbl.catalog.elasticsearch.FlightElkRepository;
-import org.gbl.catalog.elasticsearch.document.FlightDocument;
-import org.gbl.catalog.elasticsearch.document.SeatDocument;
+import org.gbl.catalog.out.elasticsearch.FlightElkQueryBuilder;
+import org.gbl.catalog.out.elasticsearch.FlightElkRepository;
+import org.gbl.catalog.out.elasticsearch.document.FlightDocument;
+import org.gbl.catalog.out.elasticsearch.document.SeatDocument;
 import org.gbl.kernel.application.NotFoundException;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.elasticsearch.client.elc.NativeQuery;

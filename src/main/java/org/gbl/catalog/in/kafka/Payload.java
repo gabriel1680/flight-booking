@@ -1,3 +1,3 @@
-package org.gbl.catalog.kafka;
+package org.gbl.catalog.in.kafka;
 
 public record Payload<T>(Operation operation, T before) {}
