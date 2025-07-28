@@ -5,7 +5,8 @@ import org.gbl.catalog.CatalogDto.Pagination;
 import org.gbl.catalog.CatalogDto.SearchFlightsCatalogDto;
 import org.gbl.catalog.CatalogDto.SearchFlightsCatalogQuery;
 import org.gbl.catalog.service.CatalogCommandService;
-import org.gbl.catalog.service.CatalogCommandService.FlightCreatedDto;
+import org.gbl.catalog.service.CatalogCommandService.CreateFlightCommand;
+import org.gbl.catalog.service.CatalogCommandService.DeleteFlightCommand;
 import org.gbl.catalog.service.CatalogQueryService;
 import org.springframework.stereotype.Service;
 
@@ -31,12 +32,12 @@ public class CatalogApiImpl implements CatalogApi {
     }
 
     @Override
-    public void crate(FlightCreatedDto dto) {
-        commandService.create(dto);
+    public void createFlight(CreateFlightCommand dto) {
+        commandService.handle(dto);
     }
 
     @Override
-    public void delete(String flightId) {
-        commandService.delete(flightId);
+    public void deleteFlightFor(String flightId) {
+        commandService.handle(new DeleteFlightCommand(flightId));
     }
 }

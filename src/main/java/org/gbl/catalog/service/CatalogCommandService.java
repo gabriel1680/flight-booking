@@ -20,21 +20,21 @@ public class CatalogCommandService {
         this.repository = repository;
     }
 
-    public void create(FlightCreatedDto dto) {
+    public void handle(CreateFlightCommand dto) {
         repository.save(toDocument(dto));
     }
 
-    private static FlightDocument toDocument(FlightCreatedDto dto) {
+    private static FlightDocument toDocument(CreateFlightCommand command) {
         final var document = new FlightDocument();
-        document.id = dto.id();
-        document.origin = dto.origin();
-        document.destination = dto.destination();
-        document.boardingAt = dto.boardingAt();
-        document.landingAt = dto.landingAt();
-        document.available = dto.seats.stream().anyMatch(seat -> seat.availability == 1);
-        document.seats = dto.seats.stream().map(CatalogCommandService::toDocument).toList();
-        document.createdAt = dto.createdAt();
-        document.updatedAt = dto.updatedAt();
+        document.id = command.id();
+        document.origin = command.origin();
+        document.destination = command.destination();
+        document.boardingAt = command.boardingAt();
+        document.landingAt = command.landingAt();
+        document.available = command.seats.stream().anyMatch(seat -> seat.availability == 1);
+        document.seats = command.seats.stream().map(CatalogCommandService::toDocument).toList();
+        document.createdAt = command.createdAt();
+        document.updatedAt = command.updatedAt();
         return document;
     }
 
@@ -46,13 +46,15 @@ public class CatalogCommandService {
         return seatDocument;
     }
 
-    public void delete(String id) {
-        repository.findById(id).ifPresentOrElse(
+    public void handle(DeleteFlightCommand command) {
+        repository.findById(command.flightId()).ifPresentOrElse(
                 repository::delete,
-                () -> LOG.error("Flight document not found for delete with id '{}'", id));
+                () -> LOG.error("Flight document not found for delete with flightId '{}'", command.flightId()));
     }
 
-    public record FlightCreatedDto(
+    public record DeleteFlightCommand(String flightId) {}
+
+    public record CreateFlightCommand(
             String id,
             String origin,
             String destination,

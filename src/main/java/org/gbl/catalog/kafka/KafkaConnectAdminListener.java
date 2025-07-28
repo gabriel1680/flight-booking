@@ -3,8 +3,8 @@ package org.gbl.catalog.kafka;
 import com.fasterxml.jackson.core.type.TypeReference;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.gbl.catalog.service.CatalogCommandService;
-import org.gbl.catalog.service.CatalogCommandService.FlightCreatedDto;
+import org.gbl.catalog.CatalogApi;
+import org.gbl.catalog.service.CatalogCommandService.CreateFlightCommand;
 import org.springframework.kafka.annotation.DltHandler;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.annotation.RetryableTopic;
@@ -19,21 +19,21 @@ public class KafkaConnectAdminListener {
 
     private static final Logger LOG = LogManager.getLogger(KafkaConnectAdminListener.class);
 
-    private static final TypeReference<MessageValue<FlightCreatedDto>> FLIGHT_CREATED_MESSAGE_TYPE = new TypeReference<>() {
-    };
+    private static final TypeReference<MessageValue<CreateFlightCommand>> VALUE_TYPE_REFERENCE
+            = new TypeReference<>() {};
 
-    private final CatalogCommandService catalogService;
+    private final CatalogApi catalogApi;
 
-    public KafkaConnectAdminListener(CatalogCommandService catalogService) {
-        this.catalogService = catalogService;
+    public KafkaConnectAdminListener(CatalogApi catalogApi) {
+        this.catalogApi = catalogApi;
     }
 
     @KafkaListener(
             concurrency = "${kafka.consumers.flights.concurrency}",
             containerFactory = "kafkaListenerFactory",
             topics = "${kafka.consumers.flights.topics}",
-            groupId = "${kafka.consumers.flights.group-id}",
-            id = "${kafka.consumers.flights.id}",
+            groupId = "${kafka.consumers.flights.group-flightId}",
+            id = "${kafka.consumers.flights.flightId}",
             properties = {
                     "auto.offset.reset=${kafka.consumers.flights.auto-offset-reset}"
             }
@@ -55,12 +55,12 @@ public class KafkaConnectAdminListener {
 
     private void handle(String payload) {
         final var messagePayload =
-                JacksonJsonParser.parse(payload, FLIGHT_CREATED_MESSAGE_TYPE).payload();
+                JacksonJsonParser.parse(payload, VALUE_TYPE_REFERENCE).payload();
         final var operation = messagePayload.operation();
-        final var flightCreatedDto = messagePayload.before();
+        final var flight = messagePayload.before();
         switch (operation) {
-            case DELETE -> catalogService.delete(flightCreatedDto.id());
-            case CREATE -> catalogService.create(flightCreatedDto);
+            case CREATE -> catalogApi.createFlight(flight);
+            case DELETE -> catalogApi.deleteFlightFor(flight.id());
         }
     }
 
@@ -73,5 +73,6 @@ public class KafkaConnectAdminListener {
     public void onDLTMessage(@Payload final String payload, final ConsumerRecordMetadata metadata) {
         LOG.error("DLT Message received with [topic:{}] [partition:{}] [offset:{}]: {}",
                   metadata.topic(), metadata.partition(), metadata.offset(), payload);
+        // TODO: reprocess messages
     }
 }
