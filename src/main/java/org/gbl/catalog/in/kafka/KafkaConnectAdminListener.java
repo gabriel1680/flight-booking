@@ -5,6 +5,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.gbl.catalog.CatalogApi;
 import org.gbl.catalog.CatalogDto.FlightDto;
+import org.gbl.catalog.in.kafka.util.JacksonJsonParser;
+import org.gbl.catalog.in.kafka.util.MessageValue;
 import org.springframework.kafka.annotation.DltHandler;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.annotation.RetryableTopic;

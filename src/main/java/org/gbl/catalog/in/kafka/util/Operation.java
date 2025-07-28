@@ -1,4 +1,4 @@
-package org.gbl.catalog.in.kafka;
+package org.gbl.catalog.in.kafka.util;
 
 public enum Operation {
     CREATE("c"),
