@@ -59,7 +59,7 @@ public class BookingRepositoryImpl implements BookingRepository {
     }
 
     private static Booking toDomain(BookingModel model) {
-        return new Booking(Identity.of(model.id), model.flightId,
+        return new Booking(new Identity(model.id), model.flightId,
                            model.email, BookingStatus.of(model.status),
                            model.seats.stream().map(BookingRepositoryImpl::todDomain).toList());
     }

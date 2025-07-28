@@ -18,7 +18,7 @@ public class PostgresFlightMapper {
 
     public Flight toDomain(PostgresFlightModel model) {
         return Flight.hydrate(
-                Identity.of(model.id),
+                new Identity(model.id),
                 new Capacity(model.capacity),
                 new Route(model.origin, model.destination),
                 new Schedule(model.boardingAt, model.landingAt),
@@ -41,7 +41,7 @@ public class PostgresFlightMapper {
 
     public Seat toDomain(PostgresSeatModel model) {
         return Seat.hydrate(
-                Identity.of(model.id),
+                new Identity(model.id),
                 new SeatNumber(model.number),
                 SeatType.of(model.type),
                 Availability.of(model.availability)
