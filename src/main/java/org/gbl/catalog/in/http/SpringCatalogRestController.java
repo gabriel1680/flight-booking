@@ -16,11 +16,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/catalog")
-public class CatalogController {
+public class SpringCatalogRestController {
 
     private final CatalogApi catalogApi;
 
-    public CatalogController(CatalogApi catalogApi) {
+    public SpringCatalogRestController(CatalogApi catalogApi) {
         this.catalogApi = catalogApi;
     }
 
