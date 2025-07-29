@@ -22,11 +22,13 @@ complexity of such system.
 
 ## Tech Stack
 
-- Java
-- Spring
-- Docker compose
-- RabbitMQ
+- Java (with Spring)
 - Postgres
+- Kafka
+- Kafka Connect
+- RabbitMQ
+- Elasticsearch
+- Docker
 
 ## Configuration
 
