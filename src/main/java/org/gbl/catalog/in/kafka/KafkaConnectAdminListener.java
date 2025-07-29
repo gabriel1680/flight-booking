@@ -34,8 +34,8 @@ public class KafkaConnectAdminListener {
             concurrency = "${kafka.consumers.flights.concurrency}",
             containerFactory = "kafkaListenerContainerFactory",
             topics = "${kafka.consumers.flights.topics}",
-            groupId = "${kafka.consumers.flights.group-flightId}",
-            id = "${kafka.consumers.flights.flightId}",
+            groupId = "${kafka.consumers.flights.group-id}",
+            id = "${kafka.consumers.flights.id}",
             properties = {
                     "auto.offset.reset=${kafka.consumers.flights.auto-offset-reset}"
             }
