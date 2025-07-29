@@ -52,7 +52,7 @@ public class CatalogApiImpl implements CatalogApi {
         commandHandler.handle(new DeleteFlightCommand(flightId));
     }
 
-    @Mapper
+    @Mapper(componentModel="spring", uses= CatalogApiImpl.class)
     public interface FlightDtoMapper {
         CreateFlightCommand toCommand(FlightDto dto);
 
