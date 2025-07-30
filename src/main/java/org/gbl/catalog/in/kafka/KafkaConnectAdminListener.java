@@ -56,13 +56,15 @@ public class KafkaConnectAdminListener {
     }
 
     private void handle(String payload) {
-        final var messagePayload =
-                JacksonJsonParser.parse(payload, VALUE_TYPE_REFERENCE).payload();
+        final var parsed = JacksonJsonParser.parse(payload, VALUE_TYPE_REFERENCE);
+        final var messagePayload = parsed.payload();
         final var operation = messagePayload.operation();
-        final var flight = messagePayload.before();
+        final var flight = messagePayload.after();
         switch (operation) {
             case CREATE -> catalogApi.createFlight(flight);
             case DELETE -> catalogApi.deleteFlightFor(flight.id());
+            // TODO: implement update events?
+            default -> LOG.info("Kafka Connect event dispatched with operation {} ignored.", operation.value());
         }
     }
 

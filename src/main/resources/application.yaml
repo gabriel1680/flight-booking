@@ -54,7 +54,7 @@ kafka:
       auto-offset-reset: earliest
       concurrency: 1
       id: kafka-listener-flights
-      topics: adm_flights_postgres.adm_flights.flights
+      topics: admin_flights.public.flights
       group-id: flights-catalog
       max-attempts: 4
 

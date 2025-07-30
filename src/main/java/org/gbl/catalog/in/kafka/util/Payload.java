@@ -1,3 +1,6 @@
 package org.gbl.catalog.in.kafka.util;
 
-public record Payload<T>(Operation operation, T before) {}
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+public record Payload<T>(
+        @JsonProperty("op") Operation operation, T after) {}
