@@ -38,8 +38,15 @@ spring:
       "[hibernate.dialect]": org.hibernate.dialect.PostgreSQLDialect
       "[hibernate.generate_statics]": false
       "[hibernate.connection.provider_disables_autocommit]": ${postgres.disables_autocommit:true}
+  elasticsearch:
+    uris: ${elasticsearch.uris}
+    username: ${elasticsearch.username}
+    password: ${elasticsearch.password}
+    connect-timeout: 10_000
+    socket-timeout: 10_000
 
 kafka:
+  bootstrap-servers: localhost:9092
   auto-create-topics: false
   pool-timeout: 1_000
   consumers:
@@ -58,4 +65,3 @@ management:
         enabled: false
     tracing:
       enabled: false
-

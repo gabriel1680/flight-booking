@@ -30,6 +30,15 @@ complexity of such system.
 - Elasticsearch
 - Docker
 
+## Infrastructure
+
+- Kafka Broker - `localhost:9092`
+- Zookeeper - `localhost:2181`
+- Postgres - `localhost:5432`
+- Debezium Connector - `localhost:8083`
+- Schema Registry - `localhost:8081`
+- Control Center - `localhost:9021`
+
 ## Configuration
 
 ### Development
@@ -43,31 +52,37 @@ docker compose up -d
 Configure kafka connect connector with debezium
 
 ```shell
-curl --location --request PUT 'http://localhost:8083/connectors/admin-postgres-cdc/config' \
+curl --location --request POST 'http://localhost:8083/connectors' \
 --header 'Content-Type: application/json' \
 --data '{
-    "topic.creation.default.replication.factor": 1,
-    "topic.creation.default.partitions": 1,
-    "connector.class": "io.debezium.connector.postgres.PostgresConnector",
-    "tasks.max": "1",
-    "key.converter": "org.apache.kafka.connect.json.JsonConverter",
-    "key.converter.schemas.enable": "true",
-    "value.converter": "org.apache.kafka.connect.json.JsonConverter",
-    "value.converter.schemas.enable": "true",
-    "database.hostname": "postgres",
-    "database.port": "5432",
-    "database.user": "debezium",
-    "database.password": "debezium",
-    "database.server.id": "10000",
-    "database.server.name": "flight_db",
-    "database.allowPublicKeyRetrieval": "true",
-    "database.include.list": "admin_flights",
-    "table.include.list": "admin_flights.flights",
-    "database.history.kafka.bootstrap.servers": "kafka:9092",
-    "database.history.kafka.topic": "admin_flights.dbhistory",
-    "include.schema.changes": "false",
-    "schema.enable": "false",
-    "topic.creation.admin_flights.include": "flight_db\\.admin_flights\\.*",
-    "topic.creation.admin_flights.partitions": 1
+	"name": "admin-postgres-cdc",
+		"config": {
+		"topic.creation.default.replication.factor": 1,
+		"topic.creation.default.partitions": 1,
+		"connector.class": "io.debezium.connector.postgresql.PostgresConnector",
+		"plugin.name": "pgoutput",
+		"tasks.max": "1",
+		"key.converter": "org.apache.kafka.connect.json.JsonConverter",
+		"key.converter.schemas.enable": "true",
+		"value.converter": "org.apache.kafka.connect.json.JsonConverter",
+		"value.converter.schemas.enable": "true",
+		"database.hostname": "postgres",
+		"database.port": "5432",
+		"database.user": "postgres",
+		"database.dbname": "booking_db",
+		"database.password": "123",
+		"database.server.id": "10000",
+		"database.server.name": "flight_db",
+		"database.allowPublicKeyRetrieval": "true",
+		"database.include.list": "admin_flights",
+		"table.include.list": "admin_flights.flights",
+		"database.history.kafka.bootstrap.servers": "kafka:9092",
+		"database.history.kafka.topic": "admin_flights.dbhistory",
+		"include.schema.changes": "false",
+		"schema.enable": "false",
+		"topic.prefix": "admin_flights",
+		"topic.creation.admin_flights.include": "flight_db\\.admin_flights\\.*",
+		"topic.creation.admin_flights.partitions": 1
+	}
 }'
 ```

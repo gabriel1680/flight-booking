@@ -4,6 +4,7 @@ server:
     threads:
       worker: 10
       io: 2
+
 spring:
   jpa:
     show-sql: true
@@ -20,3 +21,8 @@ postgres:
   username: admin
   password: 123
   disables_autocommit: false
+
+elasticsearch:
+  uris: ${ELASTICSEARCH_URIS:http://localhost:9200}
+  username: ${ELASTICSEARCH_USERNAME:elastic}
+  password: ${ELASTICSEARCH_PASSWORD:elastic}

@@ -16,3 +16,8 @@ postgres:
   database: ${DB_NAME}
   username: ${DB_USER}
   password: ${DB_PASSWORD}
+
+elasticsearch:
+  uris: ${ELASTICSEARCH_URIS}
+  username: ${ELASTICSEARCH_USERNAME}
+  password: ${ELASTICSEARCH_PASSWORD}
