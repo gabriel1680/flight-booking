@@ -77,6 +77,6 @@ public class KafkaConnectAdminListener {
     public void onDLTMessage(@Payload final String payload, final ConsumerRecordMetadata metadata) {
         LOG.error("DLT Message received with [topic:{}] [partition:{}] [offset:{}]: {}",
                   metadata.topic(), metadata.partition(), metadata.offset(), payload);
-        // TODO: reprocess messages
+        handle(payload);
     }
 }

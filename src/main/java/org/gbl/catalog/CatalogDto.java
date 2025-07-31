@@ -2,6 +2,7 @@ package org.gbl.catalog;
 
 import java.time.Instant;
 import java.util.Collection;
+import java.util.Collections;
 
 public class CatalogDto {
     public record SearchFlightsCatalogQuery(int page, int size, String order,
@@ -31,7 +32,13 @@ public class CatalogDto {
             Instant landingAt,
             Collection<FlightSeatDto> seats,
             Instant createdAt,
-            Instant updatedAt) {}
+            Instant updatedAt) {
+        public FlightDto {
+            if (seats == null) {
+                seats = Collections.emptyList();
+            }
+        }
+    }
 
     public record FlightSeatDto(String id, String number, int availability) {}
 }
