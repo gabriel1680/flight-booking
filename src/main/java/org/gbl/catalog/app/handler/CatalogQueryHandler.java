@@ -60,11 +60,11 @@ public class CatalogQueryHandler {
         return FlightElkQueryBuilder.build(queries);
     }
 
-    private static SearchFlightsCatalogDto toDto(FlightDocument it) {
+    private static SearchFlightsCatalogDto toDto(FlightDocument document) {
         return new SearchFlightsCatalogDto(
-                it.id,
-                new ItineraryDto(it.origin, it.destination),
-                new ScheduleDto(it.boardingAt, it.landingAt));
+                document.id,
+                new ItineraryDto(document.origin, document.destination),
+                new ScheduleDto(document.boardingAt, document.landingAt));
     }
 
     public GetFlightCatalogDto handle(GetFlightQuery query) {
