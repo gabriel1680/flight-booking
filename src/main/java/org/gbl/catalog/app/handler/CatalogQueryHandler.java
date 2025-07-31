@@ -56,7 +56,7 @@ public class CatalogQueryHandler {
         final var queries = asList(
                 FlightElkQueryBuilder.availableOnly(),
                 FlightElkQueryBuilder.originatedOn(origin),
-                FlightElkQueryBuilder.destinationOn(destination));
+                FlightElkQueryBuilder.destinationTo(destination));
         return FlightElkQueryBuilder.build(queries);
     }
 

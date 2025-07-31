@@ -16,7 +16,7 @@ public class FlightElkQueryBuilder {
         return QueryBuilders.term(t -> t.field("available").value(true));
     }
 
-    public static Query destinationOn(String destination) {
+    public static Query destinationTo(String destination) {
         return QueryBuilders.term(t -> t.field("destination").value(destination));
     }
 
