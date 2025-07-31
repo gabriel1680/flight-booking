@@ -8,7 +8,9 @@ public class CatalogDto {
     public record SearchFlightsCatalogQuery(int page, int size, String order,
                                             SearchFilter filter) {}
 
-    public record SearchFilter(String origin, String destination) {}
+    public record SearchFilter(String origin, String destination) {
+        public static final SearchFilter EMPTY = new SearchFilter(null, null);
+    }
 
     public record SearchFlightsCatalogDto(String id, ItineraryDto itinerary,
                                           ScheduleDto schedule) {}

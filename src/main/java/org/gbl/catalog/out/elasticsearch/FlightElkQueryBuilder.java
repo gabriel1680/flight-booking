@@ -8,6 +8,8 @@ import java.util.List;
 
 public class FlightElkQueryBuilder {
 
+    private static final Query NOOP = QueryBuilders.matchAll().build()._toQuery();
+
     public static Query build(List<Query> queries) {
         return QueryBuilders.bool(b -> b.must(queries));
     }
@@ -17,12 +19,15 @@ public class FlightElkQueryBuilder {
     }
 
     public static Query destinationTo(String destination) {
+        if (!StringUtils.hasText(destination)) {
+            return NOOP;
+        }
         return QueryBuilders.term(t -> t.field("destination").value(destination));
     }
 
     public static Query originatedOn(String origin) {
         if (!StringUtils.hasText(origin)) {
-            return Query.of(it -> null);
+            return NOOP;
         }
         return QueryBuilders.term(t -> t.field("origin").value(origin));
     }

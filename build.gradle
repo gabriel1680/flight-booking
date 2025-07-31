@@ -38,7 +38,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'
     implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation 'org.springframework.data:spring-data-elasticsearch:5.1.2'
+    implementation 'org.springframework.data:spring-data-elasticsearch'
     implementation 'io.sentry:sentry-spring-boot-starter-jakarta'
     implementation 'org.projectlombok:lombok:1.18.38'
     implementation 'org.springframework.kafka:spring-kafka:3.3.1'
