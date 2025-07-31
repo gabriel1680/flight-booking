@@ -8,9 +8,9 @@ import org.gbl.catalog.CatalogDto.Pagination;
 import org.gbl.catalog.CatalogDto.SearchFlightsCatalogDto;
 import org.gbl.catalog.CatalogDto.SearchFlightsCatalogQuery;
 import org.gbl.catalog.app.handler.CatalogCommandHandler;
-import org.gbl.catalog.app.handler.CatalogCommandHandler.CreateFlightCommand;
 import org.gbl.catalog.app.handler.CatalogCommandHandler.CreateSeatDto;
 import org.gbl.catalog.app.handler.CatalogCommandHandler.DeleteFlightCommand;
+import org.gbl.catalog.app.handler.CatalogCommandHandler.SaveFlightCommand;
 import org.gbl.catalog.app.handler.CatalogQueryHandler;
 import org.gbl.catalog.app.handler.CatalogQueryHandler.GetFlightQuery;
 import org.mapstruct.Mapper;
@@ -43,7 +43,7 @@ public class CatalogApiImpl implements CatalogApi {
     }
 
     @Override
-    public void createFlight(FlightDto dto) {
+    public void saveFlight(FlightDto dto) {
         commandHandler.handle(mapper.toCommand(dto));
     }
 
@@ -52,9 +52,9 @@ public class CatalogApiImpl implements CatalogApi {
         commandHandler.handle(new DeleteFlightCommand(flightId));
     }
 
-    @Mapper(componentModel="spring", uses= CatalogApiImpl.class)
+    @Mapper(componentModel = "spring", uses = CatalogApiImpl.class)
     public interface FlightDtoMapper {
-        CreateFlightCommand toCommand(FlightDto dto);
+        SaveFlightCommand toCommand(FlightDto dto);
 
         CreateSeatDto toSeat(FlightSeatDto dto);
     }

@@ -20,11 +20,11 @@ public class CatalogCommandHandler {
         this.repository = repository;
     }
 
-    public void handle(CreateFlightCommand dto) {
+    public void handle(SaveFlightCommand dto) {
         repository.save(toDocument(dto));
     }
 
-    private static FlightDocument toDocument(CreateFlightCommand command) {
+    private static FlightDocument toDocument(SaveFlightCommand command) {
         final var document = new FlightDocument();
         document.id = command.id();
         document.origin = command.origin();
@@ -54,7 +54,7 @@ public class CatalogCommandHandler {
 
     public record DeleteFlightCommand(String flightId) {}
 
-    public record CreateFlightCommand(
+    public record SaveFlightCommand(
             String id,
             String origin,
             String destination,

@@ -62,9 +62,8 @@ public class KafkaConnectAdminListener {
         final var operation = messagePayload.operation();
         final var flight = messagePayload.after();
         switch (operation) {
-            case CREATE -> catalogApi.createFlight(flight);
+            case CREATE, UPDATE -> catalogApi.saveFlight(flight);
             case DELETE -> catalogApi.deleteFlightFor(flight.id());
-            // TODO: implement update events?
             default -> LOG.info("Kafka Connect event dispatched with operation {} ignored.",
                                 operation.value());
         }

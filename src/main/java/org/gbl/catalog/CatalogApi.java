@@ -11,7 +11,7 @@ public interface CatalogApi {
 
     GetFlightCatalogDto getFlight(String id);
 
-    void createFlight(FlightDto dto);
+    void saveFlight(FlightDto dto);
 
     void deleteFlightFor(String flightId);
 }
