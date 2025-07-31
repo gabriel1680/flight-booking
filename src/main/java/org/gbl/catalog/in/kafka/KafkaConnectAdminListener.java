@@ -16,6 +16,8 @@ import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.retry.annotation.Backoff;
 import org.springframework.stereotype.Component;
 
+import java.util.Optional;
+
 @Component
 public class KafkaConnectAdminListener {
 
@@ -47,12 +49,11 @@ public class KafkaConnectAdminListener {
     )
     public void onMessage(@Payload(required = false) final String payload,
                           final ConsumerRecordMetadata metadata) {
-        if (payload == null) {
-            logMessage(metadata, "EMPTY");
-            return;
-        }
-        logMessage(metadata, payload);
-        handle(payload);
+        LOG.info("Message received with [topic:{}] [partition:{}] [offset:{}] [payload:{}]",
+                 metadata.topic(), metadata.partition(), metadata.offset(), payload);
+        Optional.ofNullable(payload).ifPresentOrElse(
+                it -> handle(payload),
+                () -> LOG.warn("Empty payload"));
     }
 
     private void handle(String payload) {
@@ -64,19 +65,15 @@ public class KafkaConnectAdminListener {
             case CREATE -> catalogApi.createFlight(flight);
             case DELETE -> catalogApi.deleteFlightFor(flight.id());
             // TODO: implement update events?
-            default -> LOG.info("Kafka Connect event dispatched with operation {} ignored.", operation.value());
+            default -> LOG.info("Kafka Connect event dispatched with operation {} ignored.",
+                                operation.value());
         }
-    }
-
-    private static void logMessage(ConsumerRecordMetadata metadata, String payload) {
-        LOG.info("Message received with [topic:{}] [partition:{}] [offset:{}] [payload:{}]",
-                 metadata.topic(), metadata.partition(), metadata.offset(), payload);
     }
 
     @DltHandler
     public void onDLTMessage(@Payload final String payload, final ConsumerRecordMetadata metadata) {
         LOG.error("DLT Message received with [topic:{}] [partition:{}] [offset:{}]: {}",
                   metadata.topic(), metadata.partition(), metadata.offset(), payload);
-        handle(payload);
+        onMessage(payload, metadata);
     }
 }
