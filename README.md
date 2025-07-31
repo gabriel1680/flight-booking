@@ -80,6 +80,7 @@ curl --location --request POST 'http://localhost:8083/connectors' \
 		"database.history.kafka.topic": "admin_flights.dbhistory",
 		"include.schema.changes": "false",
 		"schema.enable": "false",
+		"snapshot.mode": "never",
 		"topic.prefix": "admin_flights",
 		"topic.creation.admin_flights.include": "flight_db\\.admin_flights\\.*",
 		"topic.creation.admin_flights.partitions": 1
