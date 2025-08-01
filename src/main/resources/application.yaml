@@ -16,12 +16,20 @@ spring:
     active: ${ENV:dev}
   application:
     name: booking
+  modulith:
+    republish-outstanding-events-on-restart: true
+    events:
+      externalization:
+        enabled: true
   liquibase:
     enabled: true
   datasource:
     url: jdbc:postgresql://${postgres.host}:${postgres.port}/${postgres.database}?sslmode=Require;TrustServerCertificate=true
     username: ${postgres.username}
     password: ${postgres.password}
+  rabbitmq:
+    username: ${rabbitmq.username}
+    password: ${rabbitmq.password}
   hikari:
     auto-commit: false
     connection-timeout: 250

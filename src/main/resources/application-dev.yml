@@ -23,6 +23,10 @@ postgres:
   disables_autocommit: false
 
 elasticsearch:
-  uris: ${ELASTICSEARCH_URIS:http://localhost:9200}
-  username: ${ELASTICSEARCH_USERNAME:elastic}
-  password: ${ELASTICSEARCH_PASSWORD:elastic}
+  uris: http://localhost:9200
+  username: elastic
+  password: elastic
+
+rabbitmq:
+  username: rabbit_booking_user
+  password: 123
