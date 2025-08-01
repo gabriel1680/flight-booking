@@ -32,43 +32,52 @@ ext {
 }
 
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter'
-    implementation 'org.springframework.boot:spring-boot-starter-actuator'
-    implementation 'org.springframework.boot:spring-boot-starter-amqp'
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation 'org.springframework.data:spring-data-elasticsearch'
-    implementation 'io.sentry:sentry-spring-boot-starter-jakarta'
-    implementation 'org.projectlombok:lombok:1.18.38'
+    // Spring boot
+    implementation 'org.springframework.boot:spring-boot-starter:3.5.3'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator:3.5.3'
+    implementation 'org.springframework.boot:spring-boot-starter-amqp:3.5.3'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa:3.5.3'
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis:3.5.3'
+    implementation 'org.springframework.boot:spring-boot-starter-web:3.5.3'
+    annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor:3.5.3'
+    implementation 'io.sentry:sentry-spring-boot-starter-jakarta:8.16.0'
+
+    // Spring data
+    implementation 'org.springframework.data:spring-data-elasticsearch:5.5.1'
     implementation 'org.springframework.kafka:spring-kafka:3.3.1'
-    implementation 'com.fasterxml.jackson.module:jackson-module-afterburner:2.12.0'
 
-    liquibaseRuntime 'org.liquibase:liquibase-core'
-    liquibaseRuntime 'org.postgresql:postgresql'
+    // Liquibase
+    liquibaseRuntime 'org.liquibase:liquibase-core:4.31.1'
+    liquibaseRuntime 'org.postgresql:postgresql:42.7.7'
+    runtimeOnly 'org.postgresql:postgresql:42.7.7'
 
-    implementation 'org.springframework.modulith:spring-modulith-events-api'
-    implementation 'org.springframework.modulith:spring-modulith-starter-core'
-    implementation 'org.springframework.modulith:spring-modulith-starter-jpa'
-    developmentOnly 'org.springframework.boot:spring-boot-devtools'
-    developmentOnly 'org.springframework.boot:spring-boot-docker-compose'
+    // Spring modulith
+    implementation 'org.springframework.modulith:spring-modulith-events-api:1.4.1'
+    implementation 'org.springframework.modulith:spring-modulith-starter-core:1.4.1'
+    implementation 'org.springframework.modulith:spring-modulith-starter-jpa:1.4.1'
 
-    runtimeOnly 'io.micrometer:micrometer-registry-otlp'
-    runtimeOnly 'org.postgresql:postgresql'
-    runtimeOnly 'org.springframework.modulith:spring-modulith-actuator'
-    runtimeOnly 'org.springframework.modulith:spring-modulith-events-amqp'
-    runtimeOnly 'org.springframework.modulith:spring-modulith-observability'
+    runtimeOnly 'org.springframework.modulith:spring-modulith-actuator:1.4.1'
+    runtimeOnly 'org.springframework.modulith:spring-modulith-events-amqp:1.4.1'
+    runtimeOnly 'org.springframework.modulith:spring-modulith-observability:1.4.1'
 
-    annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+    developmentOnly 'org.springframework.boot:spring-boot-devtools:3.5.3'
+    developmentOnly 'org.springframework.boot:spring-boot-docker-compose:3.5.3'
 
+    // Observability
+    runtimeOnly 'io.micrometer:micrometer-registry-otlp:1.15.1'
+
+    // Helpers - Mappers
     implementation 'org.mapstruct:mapstruct:1.6.3'
     annotationProcessor 'org.mapstruct:mapstruct-processor:1.6.3'
+    implementation 'org.projectlombok:lombok:1.18.38'
+    implementation 'com.fasterxml.jackson.module:jackson-module-afterburner:2.12.0'
 
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    testImplementation 'org.springframework.amqp:spring-rabbit-test'
-    testImplementation 'org.springframework.cloud:spring-cloud-starter-contract-verifier'
-    testImplementation 'org.springframework.modulith:spring-modulith-starter-test'
-    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+    // Test
+    testImplementation 'org.springframework.boot:spring-boot-starter-test:3.5.3'
+    testImplementation 'org.springframework.amqp:spring-rabbit-test:3.2.5'
+    testImplementation 'org.springframework.cloud:spring-cloud-starter-contract-verifier:4.3.0'
+    testImplementation 'org.springframework.modulith:spring-modulith-starter-test:1.4.1'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher:1.12.2'
 }
 
 dependencyManagement {
