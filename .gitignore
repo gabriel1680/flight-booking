@@ -38,4 +38,4 @@ out/
 
 ### MacOS ###
 .DS_Store
-.docker/kafka/*/**
+docker/kafka/*/**

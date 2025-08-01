@@ -58,10 +58,24 @@ kafka:
       group-id: flights-catalog
       max-attempts: 4
 
+# Observability
 management:
+  tracing:
+    sampling:
+      probability: '1.0'
   otlp:
     metrics:
       export:
-        enabled: false
+        enabled: true
+        url: http://otel-collector:4318/v1/metrics
     tracing:
-      enabled: false
+      enabled: true
+      endpoint: http://collector:4318/v1/traces
+  endpoints:
+    web:
+      exposure:
+        include: *
+  metrics:
+    export:
+      otlp:
+        enabled: true
