@@ -28,6 +28,10 @@ complexity of such system.
 - Kafka Connect
 - RabbitMQ
 - Elasticsearch
+- Jaeger
+- Filebeat
+- Logstash
+- Kibana
 - Docker
 
 ## Infrastructure
@@ -38,6 +42,12 @@ complexity of such system.
 - Debezium Connector - `localhost:8083`
 - Schema Registry - `localhost:8081`
 - Control Center - `localhost:9021`
+- Jaeger - `localhost:16686`
+- Filebeat - `no server port`
+- Kibana - `localhost:5601`
+- Logstash - `localhost:5044`
+- Otel Collector - `localhost:4318`
+- Elasticsearch - `localhost:9200`
 
 ## Configuration
 
