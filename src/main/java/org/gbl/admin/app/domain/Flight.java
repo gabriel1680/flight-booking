@@ -14,9 +14,9 @@ import java.util.function.Predicate;
 
 public class Flight {
     private final Identity id;
-    private Capacity capacity;
-    private Route route;
-    private Schedule schedule;
+    private final Capacity capacity;
+    private final Route route;
+    private final Schedule schedule;
     private final List<Seat> seats;
 
     private Flight(Identity id, Capacity capacity, Route route, Schedule schedule,
