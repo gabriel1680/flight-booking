@@ -2,6 +2,8 @@ package org.gbl.kernel.infra.spring.config;
 
 import org.gbl.admin.app.event.BookingConfirmed;
 import org.gbl.admin.app.event.BookingFailed;
+import org.gbl.admin.in.config.AdminAmqpConfiguration;
+import org.gbl.booking.config.BookingAmqpConfiguration;
 import org.gbl.booking.event.BookingCreated;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,11 +18,14 @@ public class ExternalizationConfiguration {
         return EventExternalizationConfiguration.externalizing()
                 .selectByPackage("org.gbl.*")
                 .route(BookingCreated.class, evt ->
-                        RoutingTarget.forTarget(AmqpConfiguration.TOPIC_EXCHANGE).andKey("booking.created"))
+                        RoutingTarget.forTarget(BookingAmqpConfiguration.TOPIC_EXCHANGE)
+                                .andKey("booking.created"))
                 .route(BookingFailed.class, evt ->
-                        RoutingTarget.forTarget(AmqpConfiguration.TOPIC_EXCHANGE).andKey("booking.failed"))
+                        RoutingTarget.forTarget(AdminAmqpConfiguration.TOPIC_EXCHANGE)
+                                .andKey("booking.failed"))
                 .route(BookingConfirmed.class, evt ->
-                        RoutingTarget.forTarget(AmqpConfiguration.TOPIC_EXCHANGE).andKey("booking.confirmed"))
+                        RoutingTarget.forTarget(AdminAmqpConfiguration.TOPIC_EXCHANGE)
+                                .andKey("booking.confirmed"))
                 .build();
     }
 }

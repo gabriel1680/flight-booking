@@ -1,7 +1,8 @@
-package org.gbl.kernel.infra.spring.config;
+package org.gbl.admin.in.config;
 
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
+import org.springframework.amqp.core.Declarables;
 import org.springframework.amqp.core.Exchange;
 import org.springframework.amqp.core.ExchangeBuilder;
 import org.springframework.amqp.core.Queue;
@@ -13,17 +14,20 @@ import java.time.Duration;
 import java.time.temporal.ChronoUnit;
 
 @Configuration
-public class AmqpConfiguration {
+public class AdminAmqpConfiguration {
 
-    public static final String TOPIC_EXCHANGE = "booking-exchange";
+    public static final String TOPIC_EXCHANGE = "admin-exchange";
+    private static final String BOOKING_CONFIRMED_KEY = "booking.confirmed";
+    private static final String BOOKING_FAILED_KEY = "booking.failed";
 
     @Bean
-    public Binding bindingBookingCreated() {
-        return BindingBuilder
-                .bind(bookingCreatedQueue())
-                .to(exchange())
-                .with("booking.created")
-                .noargs();
+    public Declarables bindings() {
+        return new Declarables(
+                bookingConfirmedQueue(),
+                bookingFailedQueue(),
+                exchange(),
+                bindingBookingConfirmed(),
+                bindingBookingFailed());
     }
 
     @Bean
@@ -31,7 +35,7 @@ public class AmqpConfiguration {
         return BindingBuilder
                 .bind(bookingConfirmedQueue())
                 .to(exchange())
-                .with("booking.confirmed")
+                .with(BOOKING_CONFIRMED_KEY)
                 .noargs();
     }
 
@@ -40,7 +44,7 @@ public class AmqpConfiguration {
         return BindingBuilder
                 .bind(bookingFailedQueue())
                 .to(exchange())
-                .with("booking.failed")
+                .with(BOOKING_FAILED_KEY)
                 .noargs();
     }
 
@@ -50,33 +54,32 @@ public class AmqpConfiguration {
     }
 
     @Bean
-    public Queue bookingCreatedQueue() {
-        return QueueBuilder
-                .durable("booking.created.queue")
-                .expires((int) Duration.of(1, ChronoUnit.HOURS).get(ChronoUnit.MILLIS))
-                .deadLetterExchange("booking.created.queue.dlq")
-                .exclusive()
-                .build();
-    }
-
-    @Bean
     public Queue bookingFailedQueue() {
+        final var config = QueueConfig.of(BOOKING_FAILED_KEY);
         return QueueBuilder
-                .durable("booking.failed.queue")
+                .durable(config.queue())
                 .expires((int) Duration.of(1, ChronoUnit.HOURS).get(ChronoUnit.MILLIS))
-                .deadLetterExchange("booking.failed.queue.dql")
+                .deadLetterExchange(config.dlq())
                 .exclusive()
                 .build();
     }
 
     @Bean
     public Queue bookingConfirmedQueue() {
+        final var config = QueueConfig.of(BOOKING_CONFIRMED_KEY);
         return QueueBuilder
-                .durable("booking.confirmed.queue")
+                .durable(config.queue())
                 .expires((int) Duration.of(1, ChronoUnit.HOURS).get(ChronoUnit.MILLIS))
-                .deadLetterExchange("booking.confirmed.queue.dlq")
+                .deadLetterExchange(config.dlq())
                 .exclusive()
                 .build();
     }
 
+    private record QueueConfig(String queue, String dlq) {
+        static QueueConfig of(final String routingKey) {
+            final var queue = "%s.queue".formatted(routingKey);
+            final var dlq = "%s.dlq".formatted(queue);
+            return new QueueConfig(queue, dlq);
+        }
+    }
 }
