@@ -2,7 +2,7 @@ FROM eclipse-temurin:21-jdk
 
 WORKDIR /app
 
-COPY ./build/libs/app.jar ./app.jar
+COPY ./build/libs/booking-0.0.1-SNAPSHOT-plain.jar ./app.jar
 
 # Download or copy OpenTelemetry Java agent
 RUN curl -L -o opentelemetry-javaagent.jar https://github.com/open-telemetry/opentelemetry-java-instrumentation/releases/download/v1.38.0/opentelemetry-javaagent.jar

@@ -1,7 +1,7 @@
 receivers:
   otlp:
     protocols:
-      http:
+      http: { }
 
 exporters:
   logging:
@@ -10,8 +10,8 @@ exporters:
 service:
   pipelines:
     metrics:
-      receivers: [otlp]
-      exporters: [logging]
+      receivers: [ otlp ]
+      exporters: [ logging ]
     traces:
-      receivers: [otlp]
-      exporters: [logging]
+      receivers: [ otlp ]
+      exporters: [ logging ]
