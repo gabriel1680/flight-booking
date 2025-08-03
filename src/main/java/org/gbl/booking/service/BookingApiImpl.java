@@ -14,13 +14,13 @@ import org.springframework.stereotype.Service;
 import java.util.Collection;
 
 @Service
-public class BookingService implements BookingApi {
+public class BookingApiImpl implements BookingApi {
 
     private final FlightAdminApi flightAdminApi;
     private final BookingRepository bookingRepository;
     private final EventDispatcher dispatcher;
 
-    public BookingService(FlightAdminApi flightAdminApi, BookingRepository bookingRepository,
+    public BookingApiImpl(FlightAdminApi flightAdminApi, BookingRepository bookingRepository,
                           EventDispatcher dispatcher) {
         this.flightAdminApi = flightAdminApi;
         this.bookingRepository = bookingRepository;

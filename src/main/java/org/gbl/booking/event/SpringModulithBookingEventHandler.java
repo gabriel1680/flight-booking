@@ -1,18 +1,17 @@
-package org.gbl.booking.service;
+package org.gbl.booking.event;
 
 import org.gbl.admin.app.event.BookingConfirmed;
 import org.gbl.admin.app.event.BookingFailed;
 import org.gbl.booking.BookingApi;
-import org.gbl.kernel.application.EventHandler;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 
 @Service
-public class BookingEventHandler implements EventHandler<BookingConfirmed> {
+public class SpringModulithBookingEventHandler {
 
     private final BookingApi bookingApi;
 
-    public BookingEventHandler(BookingApi bookingApi) {
+    public SpringModulithBookingEventHandler(BookingApi bookingApi) {
         this.bookingApi = bookingApi;
     }
 
