@@ -82,8 +82,32 @@ management:
   endpoints:
     web:
       exposure:
-        include: *
+        include: { }
   metrics:
     export:
       otlp:
         enabled: true
+
+rabbit:
+  queues:
+    booking-created:
+      exchange: booking.exchange
+      queue: booking.created.queue
+      routingKey: booking.created
+      dlx: booking.created.queue.dlx
+      dlqRoutingKey: booking.created.queue.dlq
+      ttl: 300000
+    booking-confirmed:
+      exchange: booking.exchange
+      queue: booking.confirmed.queue
+      routingKey: booking.confirmed
+      dlx: booking.confirmed.queue.dlx
+      dlqRoutingKey: booking.confirmed.queue.dlq
+      ttl: 300000
+    booking-failed:
+      exchange: booking.exchange
+      queue: booking.failed.queue
+      routingKey: booking.failed
+      dlx: booking.failed.queue.dlx
+      dlqRoutingKey: booking.failed.queue.dlq
+      ttl: 300000

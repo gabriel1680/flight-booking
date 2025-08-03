@@ -1,16 +1,17 @@
 package org.gbl.booking.service;
 
+import org.gbl.admin.app.event.BookingConfirmed;
+import org.gbl.admin.app.event.BookingFailed;
 import org.gbl.booking.domain.Booking;
 import org.gbl.booking.domain.BookingRepository;
 import org.gbl.booking.service.BookingService.BookingNotFoundException;
-import org.gbl.admin.app.event.BookingConfirmed;
-import org.gbl.admin.app.event.BookingFailed;
+import org.gbl.kernel.application.EventHandler;
 import org.gbl.kernel.domain.Identity;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 
 @Service
-public class BookingEventHandler {
+public class BookingEventHandler implements EventHandler<BookingConfirmed> {
 
     private final BookingRepository bookingRepository;
 
@@ -19,14 +20,14 @@ public class BookingEventHandler {
     }
 
     @EventListener
-    public void on(BookingConfirmed event) {
+    public void handle(BookingConfirmed event) {
         final var booking = getBookingFor(event.bookingId());
         booking.confirm();
         bookingRepository.save(booking);
     }
 
     @EventListener
-    public void on(BookingFailed event) {
+    public void handle(BookingFailed event) {
         final var booking = getBookingFor(event.bookingId());
         booking.fail();
         bookingRepository.save(booking);

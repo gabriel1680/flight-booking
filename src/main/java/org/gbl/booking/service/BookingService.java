@@ -6,7 +6,7 @@ import org.gbl.booking.domain.BookingRepository;
 import org.gbl.booking.event.BookingCreated;
 import org.gbl.admin.FlightAdminApi;
 import org.gbl.admin.FlightAdminApi.GetFlightRequest;
-import org.gbl.admin.app.service.EventDispatcher;
+import org.gbl.kernel.application.EventDispatcher;
 import org.gbl.kernel.application.ApplicationException;
 import org.springframework.stereotype.Service;
 

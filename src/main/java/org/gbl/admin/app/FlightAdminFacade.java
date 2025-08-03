@@ -5,7 +5,7 @@ import org.gbl.admin.app.domain.Flight;
 import org.gbl.admin.app.domain.Seat;
 import org.gbl.admin.app.event.BookingConfirmed;
 import org.gbl.admin.app.event.BookingFailed;
-import org.gbl.admin.app.service.EventDispatcher;
+import org.gbl.kernel.application.EventDispatcher;
 import org.gbl.admin.app.service.FlightNotFoundException;
 import org.gbl.admin.app.service.FlightQueryService;
 import org.gbl.admin.app.service.FlightRepository;

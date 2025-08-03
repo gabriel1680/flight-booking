@@ -2,14 +2,14 @@ package org.gbl.admin.in.event;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.gbl.booking.event.BookingCreated;
 import org.gbl.admin.FlightAdminApi;
 import org.gbl.admin.FlightAdminApi.BookSeatsRequest;
-import org.springframework.context.event.EventListener;
+import org.gbl.booking.event.BookingCreated;
+import org.gbl.kernel.application.EventHandler;
 import org.springframework.stereotype.Service;
 
 @Service
-public class BookingCreatedHandler {
+public class BookingCreatedHandler implements EventHandler<BookingCreated> {
 
     private static final Logger LOG = LogManager.getLogger(BookingCreatedHandler.class);
 
@@ -19,7 +19,6 @@ public class BookingCreatedHandler {
         this.flightAdminApi = flightAdminApi;
     }
 
-    @EventListener
     public void handle(BookingCreated event) {
         LOG.info("Processing BookingCreated event of bookingId: {}", event.bookingId());
         final var request = new BookSeatsRequest(event.bookingId(), event.flightId(),
