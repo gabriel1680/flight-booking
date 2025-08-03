@@ -1,7 +1,9 @@
-package org.gbl.catalog.in.kafka.util;
+package org.gbl.kernel.infra.jackson;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import org.gbl.catalog.CatalogDto.FlightDto;
+import org.gbl.catalog.in.kafka.util.MessageValue;
+import org.gbl.catalog.in.kafka.util.Operation;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
