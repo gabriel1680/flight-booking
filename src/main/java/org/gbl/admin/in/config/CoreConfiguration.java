@@ -3,7 +3,7 @@ package org.gbl.admin.in.config;
 import org.gbl.admin.FlightAdminApi;
 import org.gbl.admin.app.FlightAdminFacade;
 import org.gbl.admin.app.domain.Flight;
-import org.gbl.admin.app.service.EventDispatcher;
+import org.gbl.kernel.application.EventDispatcher;
 import org.gbl.admin.app.service.FlightQueryService;
 import org.gbl.admin.app.service.FlightRepository;
 import org.gbl.admin.out.db.memory.InMemoryFlightRepository;

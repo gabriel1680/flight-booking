@@ -1,11 +1,11 @@
 package org.gbl.kernel.infra.spring.event;
 
-import org.gbl.admin.app.service.EventDispatcher;
+import org.gbl.kernel.application.Event;
+import org.gbl.kernel.application.EventDispatcher;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 
-@Service
-public class SpringEventDispatcher implements EventDispatcher {
+public class SpringEventDispatcher {
 
     private final ApplicationEventPublisher eventPublisher;
 
@@ -13,8 +13,7 @@ public class SpringEventDispatcher implements EventDispatcher {
         this.eventPublisher = eventPublisher;
     }
 
-    @Override
-    public void dispatch(Object event) {
+    public void dispatch(Event event) {
         eventPublisher.publishEvent(event);
     }
 }
