@@ -14,4 +14,8 @@ public interface BookingApi {
 
     record SeatReservationRequest(String seatId, double price) {
     }
+
+    void confirmBooking(String bookingId);
+
+    void failBooking(String bookingId);
 }

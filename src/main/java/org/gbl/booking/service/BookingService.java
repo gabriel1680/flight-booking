@@ -1,13 +1,14 @@
 package org.gbl.booking.service;
 
+import org.gbl.admin.FlightAdminApi;
+import org.gbl.admin.FlightAdminApi.GetFlightRequest;
 import org.gbl.booking.BookingApi;
 import org.gbl.booking.domain.Booking;
 import org.gbl.booking.domain.BookingRepository;
 import org.gbl.booking.event.BookingCreated;
-import org.gbl.admin.FlightAdminApi;
-import org.gbl.admin.FlightAdminApi.GetFlightRequest;
-import org.gbl.kernel.application.EventDispatcher;
 import org.gbl.kernel.application.ApplicationException;
+import org.gbl.kernel.application.EventDispatcher;
+import org.gbl.kernel.domain.Identity;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -55,5 +56,25 @@ public class BookingService implements BookingApi {
         public BookingNotFoundException(String bookingId) {
             super("Booking with id '%s' not found".formatted(bookingId));
         }
+    }
+
+
+    @Override
+    public void confirmBooking(String bookingId) {
+        final var booking = getBookingFor(bookingId);
+        booking.confirm();
+        bookingRepository.save(booking);
+    }
+
+    @Override
+    public void failBooking(String bookingId) {
+        final var booking = getBookingFor(bookingId);
+        booking.fail();
+        bookingRepository.save(booking);
+    }
+
+    private Booking getBookingFor(String bookingId) {
+        return bookingRepository.findById(Identity.of(bookingId))
+                .orElseThrow(() -> new BookingNotFoundException(bookingId));
     }
 }
