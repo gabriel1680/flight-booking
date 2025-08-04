@@ -34,3 +34,12 @@ elasticsearch:
 rabbitmq:
   username: ${RABBITMQ_DEFAULT_USER:rabbit_booking_user}
   password: ${RABBITMQ_DEFAULT_PASS:123}
+
+kafka:
+  bootstrap-servers: http://${KAFKA_HOST:localhost}:9200
+
+opentelemetry:
+  metrics:
+    url: http://${OTLP_HOST:localhost}:4318/v1/metrics
+  tracing:
+    endpoint: http://${OTLP_HOST:localhost}:4318/v1/traces

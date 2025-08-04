@@ -55,7 +55,7 @@ spring:
     socket-timeout: 10_000
 
 kafka:
-  bootstrap-servers: localhost:9092
+  bootstrap-servers: ${kafka:bootstrap-servers}
   auto-create-topics: false
   pool-timeout: 1_000
   consumers:
@@ -76,10 +76,10 @@ management:
     metrics:
       export:
         enabled: true
-        url: http://localhost:4318/v1/metrics
+        url: ${opentelemetry.metrics.url}
     tracing:
       enabled: true
-      endpoint: http://localhost:4318/v1/traces
+      endpoint: ${opentelemetry.tracing.endpoint}
   endpoints:
     web:
       exposure:
