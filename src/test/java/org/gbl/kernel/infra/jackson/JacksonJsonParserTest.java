@@ -1,6 +1,7 @@
 package org.gbl.kernel.infra.jackson;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import org.gbl.booking.event.BookingCreated;
 import org.gbl.catalog.CatalogDto.FlightDto;
 import org.gbl.catalog.in.kafka.util.MessageValue;
 import org.gbl.catalog.in.kafka.util.Operation;
@@ -23,6 +24,14 @@ class JacksonJsonParserTest {
         @Test
         void parseJson() {
             assertNotNull(JacksonJsonParser.parse(JSON, TYPE));
+        }
+
+        @Test
+        void parseEvent() {
+            var json = "{\"bookingId\":\"f175d574-fc21-43bf-809f-6c5a259f22c4\",\"flightId\":\"8b1c7e1f-abb7-4910-bdad-403589ee44b4\",\"seatIds\":[\"9420882a-108e-4e88-a46b-110de0ad63e7\"]}";
+            final var actual = JacksonJsonParser.parse(json, BookingCreated.class);
+            assertNotNull(actual);
+            assertNotNull(actual.bookingId());
         }
 
         @Test

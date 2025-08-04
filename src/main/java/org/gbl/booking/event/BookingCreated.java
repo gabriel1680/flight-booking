@@ -10,8 +10,6 @@ import java.util.stream.Collectors;
 public record BookingCreated(String bookingId, String flightId,
                              Set<String> seatIds) implements Event {
 
-    public static final String NAME = "booking.created";
-
     public BookingCreated(Booking source) {
         this(source.id().value(), source.flightId().toString(),
              source.seatReservations().stream()
@@ -21,6 +19,6 @@ public record BookingCreated(String bookingId, String flightId,
 
     @Override
     public String name() {
-        return NAME;
+        return "booking-created";
     }
 }
