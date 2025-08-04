@@ -17,7 +17,7 @@ public class RabbitMQAdminEventListener extends RabbitMQEventListener {
         this.flightAdminApi = flightAdminApi;
     }
 
-    @RabbitListener(queues = {"${rabbit.queues.booking.created.name}"})
+    @RabbitListener(queues = {"${rabbit.queues.booking-created.queue}"})
     public void listenToBookingCreated(@Payload String payload) {
         createConsumerFor(payload, BookingCreated.class).accept(this::handle);
     }

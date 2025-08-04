@@ -30,6 +30,12 @@ spring:
   rabbitmq:
     username: ${rabbitmq.username}
     password: ${rabbitmq.password}
+#    listener:
+#      simple:
+#        auto-startup: false # delays listeners initialization
+    logging:
+      level:
+        org.springframework.amqp.rabbit.core.RabbitAdmin: DEBUG
   hikari:
     auto-commit: false
     connection-timeout: 250
@@ -75,10 +81,10 @@ management:
     metrics:
       export:
         enabled: true
-        url: http://otel-collector:4318/v1/metrics
+        url: http://localhost:4318/v1/metrics
     tracing:
       enabled: true
-      endpoint: http://collector:4318/v1/traces
+      endpoint: http://localhost:4318/v1/traces
   endpoints:
     web:
       exposure:
@@ -95,6 +101,7 @@ rabbit:
       queue: booking.created.queue
       routingKey: booking.created
       dlx: booking.created.queue.dlx
+      dlq: booking.created.queue.dlq
       dlqRoutingKey: booking.created.queue.dlq
       ttl: 300000
     booking-confirmed:
@@ -102,6 +109,7 @@ rabbit:
       queue: booking.confirmed.queue
       routingKey: booking.confirmed
       dlx: booking.confirmed.queue.dlx
+      dlq: booking.confirmed.queue.dlq
       dlqRoutingKey: booking.confirmed.queue.dlq
       ttl: 300000
     booking-failed:
@@ -109,5 +117,6 @@ rabbit:
       queue: booking.failed.queue
       routingKey: booking.failed
       dlx: booking.failed.queue.dlx
+      dlq: booking.failed.queue.dlq
       dlqRoutingKey: booking.failed.queue.dlq
       ttl: 300000

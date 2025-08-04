@@ -17,13 +17,13 @@ public class RabbitMQBookingEventListener extends RabbitMQEventListener {
         this.bookingApi = bookingApi;
     }
 
-    @RabbitListener(queues = {"${rabbit.queues.booking.confirmed.name"})
+    @RabbitListener(queues = {"${rabbit.queues.booking-confirmed.queue}"})
     public void listenToConfirmed(@Payload String payload) {
         createConsumerFor(payload, BookingConfirmed.class)
                 .accept(event -> bookingApi.confirmBooking(event.bookingId()));
     }
 
-    @RabbitListener(queues = {"${rabbit.queues.booking.confirmed.name}"})
+    @RabbitListener(queues = {"${rabbit.queues.booking-failed.queue}"})
     public void listenToFailed(@Payload String payload) {
         createConsumerFor(payload, BookingFailed.class)
                 .accept(event -> bookingApi.failBooking(event.bookingId()));

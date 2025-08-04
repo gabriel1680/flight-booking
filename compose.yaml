@@ -49,14 +49,15 @@ services:
   #      - ./scripts:/docker-entrypoint-initdb.d
 
   rabbitmq:
-    image: 'rabbitmq:latest'
+    image: 'rabbitmq:3.12-management'
     container_name: rabbitmq
     hostname: rabbitmq
     environment:
       RABBITMQ_DEFAULT_USER: rabbit_booking_user
       RABBITMQ_DEFAULT_PASS: 123
     ports:
-      - '5672:5672'
+      - "5672:5672"     # RabbitMQ (AMQP)
+      - "15672:15672"   # RabbitMQ Management UI
 
   redis:
     image: 'redis:latest'
