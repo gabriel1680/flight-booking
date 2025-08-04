@@ -12,6 +12,10 @@ spring:
       ddl-auto: update
   datasource:
     url: jdbc:postgresql://${postgres.host}:${postgres.port}/${postgres.database}?sslmode=allow
+  rabbitmq:
+    logging:
+      level:
+        org.springframework.amqp.rabbit.core.RabbitAdmin: DEBUG
 
 # override prod configurations
 postgres:

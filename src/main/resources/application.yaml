@@ -30,12 +30,6 @@ spring:
   rabbitmq:
     username: ${rabbitmq.username}
     password: ${rabbitmq.password}
-#    listener:
-#      simple:
-#        auto-startup: false # delays listeners initialization
-    logging:
-      level:
-        org.springframework.amqp.rabbit.core.RabbitAdmin: DEBUG
   hikari:
     auto-commit: false
     connection-timeout: 250
