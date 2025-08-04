@@ -2,7 +2,6 @@ plugins {
     id 'java'
     id 'org.springframework.boot' version '3.5.3'
     id 'io.spring.dependency-management' version '1.1.7'
-//    id 'org.springframework.cloud.contract' version '4.3.0'
     id 'org.liquibase.gradle' version '2.2.1'
 }
 
@@ -76,7 +75,6 @@ dependencies {
     // Test
     testImplementation 'org.springframework.boot:spring-boot-starter-test:3.5.3'
     testImplementation 'org.springframework.amqp:spring-rabbit-test:3.2.5'
-    testImplementation 'org.springframework.cloud:spring-cloud-starter-contract-verifier:4.3.0'
     testImplementation 'org.springframework.modulith:spring-modulith-starter-test:1.4.1'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher:1.12.2'
 }
@@ -88,9 +86,6 @@ dependencyManagement {
         mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
     }
 }
-
-//contracts {
-//}
 
 liquibase {
     activities {
@@ -104,10 +99,6 @@ liquibase {
     }
     runList = 'main'
 }
-
-//tasks.named('contractTest') {
-//    useJUnitPlatform()
-//}
 
 tasks.named('test') {
     useJUnitPlatform()
