@@ -2,7 +2,7 @@ FROM eclipse-temurin:21-jdk
 
 WORKDIR /app
 
-COPY ./build/libs/booking-0.0.1-SNAPSHOT-plain.jar ./app.jar
+COPY ./build/libs/booking-0.0.1-SNAPSHOT.jar ./app.jar
 
 # Download or copy OpenTelemetry Java agent
 RUN curl -L -o opentelemetry-javaagent.jar https://github.com/open-telemetry/opentelemetry-java-instrumentation/releases/download/v1.38.0/opentelemetry-javaagent.jar
@@ -16,4 +16,4 @@ ENV OTEL_SERVICE_NAME=booking-app \
     OTEL_LOGS_EXPORTER=none
 
 # Run the app with the agent
-ENTRYPOINT ["java", "-javaagent:/app/opentelemetry-javaagent.jar", "-jar", "/app/app.jar"]
+ENTRYPOINT ["java", "-jar", "/app/app.jar"]

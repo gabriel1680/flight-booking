@@ -2,7 +2,7 @@ plugins {
     id 'java'
     id 'org.springframework.boot' version '3.5.3'
     id 'io.spring.dependency-management' version '1.1.7'
-    id 'org.springframework.cloud.contract' version '4.3.0'
+//    id 'org.springframework.cloud.contract' version '4.3.0'
     id 'org.liquibase.gradle' version '2.2.1'
 }
 
@@ -89,8 +89,8 @@ dependencyManagement {
     }
 }
 
-contracts {
-}
+//contracts {
+//}
 
 liquibase {
     activities {
@@ -105,9 +105,9 @@ liquibase {
     runList = 'main'
 }
 
-tasks.named('contractTest') {
-    useJUnitPlatform()
-}
+//tasks.named('contractTest') {
+//    useJUnitPlatform()
+//}
 
 tasks.named('test') {
     useJUnitPlatform()

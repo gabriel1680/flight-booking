@@ -19,18 +19,18 @@ spring:
 
 # override prod configurations
 postgres:
-  host: 127.0.0.1
+  host: ${PG_HOST:localhost}
   port: 5432
-  database: flights_db
-  username: admin
-  password: 123
+  database: ${POSTGRES_DB:booking_db}
+  username: ${POSTGRES_USER:postgres}
+  password: ${POSTGRES_PASSWORD:123}
   disables_autocommit: false
 
 elasticsearch:
-  uris: http://localhost:9200
-  username: elastic
-  password: elastic
+  uris: http://${ELASTIC_HOST:localhost}:9200
+  username: ${ELASTIC_USER:elastic}
+  password: ${ELASTIC_PASSWORD:elastic}
 
 rabbitmq:
-  username: rabbit_booking_user
-  password: 123
+  username: ${RABBITMQ_DEFAULT_USER:rabbit_booking_user}
+  password: ${RABBITMQ_DEFAULT_PASS:123}
