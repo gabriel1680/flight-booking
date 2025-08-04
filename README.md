@@ -36,18 +36,19 @@ complexity of such system.
 
 ## Infrastructure
 
-- Kafka Broker - `localhost:9092`
-- Zookeeper - `localhost:2181`
 - Postgres - `localhost:5432`
+- RabbitMQ - `localhost:5652`
+- Zookeeper - `localhost:2181`
+- Kafka Broker - `localhost:9092`
 - Debezium Connector - `localhost:8083`
 - Schema Registry - `localhost:8081`
 - Control Center - `localhost:9021`
-- Jaeger - `localhost:16686`
+- Otel Collector - `localhost:4318`
+- Elasticsearch - `localhost:9200`
 - Filebeat - `no server port`
 - Kibana - `localhost:5601`
 - Logstash - `localhost:5044`
-- Otel Collector - `localhost:4318`
-- Elasticsearch - `localhost:9200`
+- Jaeger - `localhost:16686`
 
 ## Configuration
 
