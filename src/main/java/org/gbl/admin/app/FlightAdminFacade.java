@@ -78,8 +78,8 @@ public class FlightAdminFacade implements FlightAdminApi {
     private GetFlightSeatResponse toOutput(Seat seat) {
         return new GetFlightSeatResponse(
                 seat.id().value(),
-                seat.type(),
-                seat.number(),
+                seat.type().value(),
+                seat.number().value(),
                 seat.isAvailable());
     }
 

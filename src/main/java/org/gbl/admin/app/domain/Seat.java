@@ -36,12 +36,12 @@ public class Seat {
         return id;
     }
 
-    public String number() {
-        return number.value();
+    public SeatNumber number() {
+        return number;
     }
 
-    public String type() {
-        return type.value();
+    public SeatType type() {
+        return type;
     }
 
     public boolean isAvailable() {

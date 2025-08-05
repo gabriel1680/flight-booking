@@ -52,8 +52,8 @@ public class PostgresFlightMapper {
         final var model = new PostgresSeatModel();
         model.id = seat.id().uuid();
         model.flightId = flightId;
-        model.number = seat.number();
-        model.type = seat.type();
+        model.number = seat.number().value();
+        model.type = seat.type().value();
         model.availability = seat.isAvailable() ? 1 : 0;
         return model;
     }
