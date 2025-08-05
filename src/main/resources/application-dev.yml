@@ -36,7 +36,7 @@ rabbitmq:
   password: ${RABBITMQ_DEFAULT_PASS:123}
 
 kafka:
-  bootstrap-servers: http://${KAFKA_HOST:localhost}:9200
+  bootstrap-servers: http://${KAFKA_HOST:localhost}:9092
 
 opentelemetry:
   metrics:
