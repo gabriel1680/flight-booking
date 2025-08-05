@@ -5,10 +5,10 @@ import org.gbl.admin.app.domain.Flight;
 import org.gbl.admin.app.domain.Seat;
 import org.gbl.admin.app.event.BookingConfirmed;
 import org.gbl.admin.app.event.BookingFailed;
-import org.gbl.kernel.application.EventDispatcher;
 import org.gbl.admin.app.service.FlightNotFoundException;
 import org.gbl.admin.app.service.FlightQueryService;
 import org.gbl.admin.app.service.FlightRepository;
+import org.gbl.kernel.application.EventDispatcher;
 import org.gbl.kernel.domain.Identity;
 
 import java.util.List;
@@ -72,7 +72,15 @@ public class FlightAdminFacade implements FlightAdminApi {
                 flight.route().destination(),
                 flight.schedule().boardingAt(),
                 flight.schedule().landingAt(),
-                flight.seats().stream().map(Seat::id).map(Identity::value).collect(Collectors.toSet()));
+                flight.seats().stream().map(this::toOutput).toList());
+    }
+
+    private GetFlightSeatResponse toOutput(Seat seat) {
+        return new GetFlightSeatResponse(
+                seat.id().value(),
+                seat.type(),
+                seat.number(),
+                seat.isAvailable());
     }
 
     @Override

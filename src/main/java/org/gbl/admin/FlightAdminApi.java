@@ -25,7 +25,10 @@ public interface FlightAdminApi {
     record GetFlightRequest(String id) {}
 
     record GetFlightResponse(String id, int capacity, String origin, String destination,
-                             Instant boardingAt, Instant landingAt, Set<String> seats) {}
+                             Instant boardingAt, Instant landingAt,
+                             Collection<GetFlightSeatResponse> seats) {}
+
+    record GetFlightSeatResponse(String id, String type, String number, boolean isAvailable) {}
 
     void bookSeats(BookSeatsRequest request);
 
