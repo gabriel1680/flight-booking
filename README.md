@@ -46,8 +46,8 @@ complexity of such system.
 - Otel Collector - `localhost:4318`
 - Elasticsearch - `localhost:9200`
 - Filebeat - `no server port`
+- Heartbeat - `no server port`
 - Kibana - `localhost:5601`
-- Logstash - `localhost:5044`
 - Jaeger - `localhost:16686`
 
 ## API Testing
@@ -59,10 +59,29 @@ tool such as insomnia or postman.
 
 ### Development
 
+Setup .env file
+
+```shell
+ehco 'POSTGRES_DB=booking_db
+POSTGRES_USER=postgres
+POSTGRES_PASSWORD=123
+
+ELASTIC_USER=elastic
+ELASTIC_PASSWORD=elastic
+
+RABBITMQ_HOST=rabbitmq
+RABBITMQ_DEFAULT_USER=rabbit_booking_user
+RABBITMQ_DEFAULT_PASS=123
+
+KAFKA_HOST=broker
+
+OTLP_HOST=otel-collector' > .env
+```
+
 Startup containers
 
 ```shell
-docker compose up -d
+chmod +x ./run.sh && ./run.sh
 ```
 
 Configure kafka connect connector with debezium
