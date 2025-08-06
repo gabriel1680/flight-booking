@@ -2,6 +2,7 @@ package org.gbl.booking.service;
 
 import org.gbl.admin.FlightAdminApi;
 import org.gbl.admin.FlightAdminApi.GetFlightRequest;
+import org.gbl.admin.FlightAdminApi.GetFlightResponse;
 import org.gbl.booking.BookingApi;
 import org.gbl.booking.domain.Booking;
 import org.gbl.booking.domain.BookingRepository;
@@ -35,15 +36,22 @@ public class BookingApiImpl implements BookingApi {
             throw new UnavailableSeatsForBooking(seatIds);
         }
         final var flight = flightAdminApi.getFlight(new GetFlightRequest(request.flightId()));
-        final var unavailableSeats =
-                seatIds.stream().filter(seatId -> !flight.seats().contains(seatId)).toList();
+        final var unavailableSeats = seatIds.stream()
+                .filter(seatId -> notExistingSeatsOn(seatId, flight))
+                .toList();
         if (!unavailableSeats.isEmpty()) {
             throw new UnavailableSeatsForBooking(unavailableSeats);
         }
         final var booking = Booking.create(request.flightId(), request.email());
-        request.seatReservations().forEach(seatReservation -> booking.addSeatReservation(seatReservation.seatId(), seatReservation.price()));
+        request.seatReservations()
+                .forEach(seatReservation -> booking.addSeatReservation(seatReservation.seatId(),
+                                                                       seatReservation.price()));
         bookingRepository.save(booking);
         dispatcher.dispatch(new BookingCreated(booking));
+    }
+
+    private static boolean notExistingSeatsOn(String seatId, GetFlightResponse flight) {
+        return flight.seats().stream().noneMatch(seat -> seat.id().equals(seatId));
     }
 
     public static class UnavailableSeatsForBooking extends ApplicationException {
@@ -57,7 +65,6 @@ public class BookingApiImpl implements BookingApi {
             super("Booking with id '%s' not found".formatted(bookingId));
         }
     }
-
 
     @Override
     public void confirmBooking(String bookingId) {

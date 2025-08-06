@@ -4,7 +4,7 @@ import org.gbl.kernel.domain.DomainException;
 
 public enum BookingStatus {
     PENDING,
-    SUCCESS,
+    CONFIRMED,
     FAILED;
 
     public static BookingStatus of(String status) {
@@ -19,13 +19,13 @@ public enum BookingStatus {
     public BookingStatus confirm() {
         return switch (this) {
             case FAILED -> FAILED; // ignore already processed event
-            case SUCCESS, PENDING -> SUCCESS;
+            case CONFIRMED, PENDING -> CONFIRMED;
         };
     }
 
     public BookingStatus fail() {
         return switch (this) {
-            case SUCCESS -> SUCCESS; // ignore already processed event
+            case CONFIRMED -> CONFIRMED; // ignore already processed event
             case FAILED, PENDING -> FAILED;
         };
     }

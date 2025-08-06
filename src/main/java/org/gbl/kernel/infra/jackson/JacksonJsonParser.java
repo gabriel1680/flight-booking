@@ -41,7 +41,7 @@ public enum JacksonJsonParser {
                     SerializationFeature.WRITE_DATES_AS_TIMESTAMPS
             )
             .modules(new JavaTimeModule(), new Jdk8Module(), afterburnerModule())
-            .propertyNamingStrategy(PropertyNamingStrategies.LOWER_CAMEL_CASE)
+            .propertyNamingStrategy(PropertyNamingStrategies.SNAKE_CASE)
             .build();
 
     private AfterburnerModule afterburnerModule() {
