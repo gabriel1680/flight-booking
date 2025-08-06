@@ -50,6 +50,11 @@ complexity of such system.
 - Logstash - `localhost:5044`
 - Jaeger - `localhost:16686`
 
+## API Testing
+
+Check the [api request file](./booking_api_request_collection.har) and import it into any request
+tool such as insomnia or postman.
+
 ## Configuration
 
 ### Development
