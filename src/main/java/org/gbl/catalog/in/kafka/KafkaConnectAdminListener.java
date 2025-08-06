@@ -3,10 +3,14 @@ package org.gbl.catalog.in.kafka;
 import com.fasterxml.jackson.core.type.TypeReference;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.gbl.admin.FlightAdminApi;
+import org.gbl.admin.FlightAdminApi.GetFlightRequest;
 import org.gbl.catalog.CatalogApi;
-import org.gbl.catalog.CatalogDto.FlightDto;
-import org.gbl.kernel.infra.jackson.JacksonJsonParser;
+import org.gbl.catalog.in.kafka.model.FlightCreatedPayload;
+import org.gbl.catalog.in.kafka.util.FlightAdminToCatalogDtoMapper;
 import org.gbl.catalog.in.kafka.util.MessageValue;
+import org.gbl.catalog.in.kafka.util.Operation;
+import org.gbl.kernel.infra.jackson.JacksonJsonParser;
 import org.springframework.kafka.annotation.DltHandler;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.annotation.RetryableTopic;
@@ -23,13 +27,16 @@ public class KafkaConnectAdminListener {
 
     private static final Logger LOG = LogManager.getLogger(KafkaConnectAdminListener.class);
 
-    private static final TypeReference<MessageValue<FlightDto>> VALUE_TYPE_REFERENCE
+    private static final TypeReference<MessageValue<FlightCreatedPayload>> VALUE_TYPE_REFERENCE
             = new TypeReference<>() {};
 
+    // The joy of hexagon and monolithic architecture (we don't need a http call)
     private final CatalogApi catalogApi;
+    private final FlightAdminApi flightAdminApi;
 
-    public KafkaConnectAdminListener(CatalogApi catalogApi) {
+    public KafkaConnectAdminListener(CatalogApi catalogApi, FlightAdminApi flightAdminApi) {
         this.catalogApi = catalogApi;
+        this.flightAdminApi = flightAdminApi;
     }
 
     @KafkaListener(
@@ -60,18 +67,33 @@ public class KafkaConnectAdminListener {
         final var parsed = JacksonJsonParser.parse(payload, VALUE_TYPE_REFERENCE);
         final var messagePayload = parsed.payload();
         final var operation = messagePayload.operation();
-        final var flight = messagePayload.after();
+        final var flightPayload = messagePayload.after();
         switch (operation) {
-            case CREATE, UPDATE -> catalogApi.saveFlight(flight);
-            case DELETE -> catalogApi.deleteFlightFor(flight.id());
+            case CREATE, UPDATE -> tryToHandle(() -> {
+                final var flight =
+                        flightAdminApi.getFlight(new GetFlightRequest(flightPayload.id()));
+                catalogApi.saveFlight(FlightAdminToCatalogDtoMapper.INSTANCE.toDto(flight));
+            }, operation);
+            case DELETE ->
+                    tryToHandle(() -> catalogApi.deleteFlightFor(flightPayload.id()), operation);
             default -> LOG.info("Kafka Connect event dispatched with operation {} ignored.",
                                 operation.value());
         }
     }
 
+    private static void tryToHandle(Runnable runnable, Operation operation) {
+        try {
+            runnable.run();
+        } catch (Throwable t) {
+            LOG.error("Failed handle operation [operation:{}] [error:{}]", operation, t.getMessage(), t);
+            // When kafka connect receives the error status it will put the message in a retry topic
+            throw t;
+        }
+    }
+
     @DltHandler
     public void onDLTMessage(@Payload final String payload, final ConsumerRecordMetadata metadata) {
-        LOG.error("DLT Message received with [topic:{}] [partition:{}] [offset:{}]: {}",
+        LOG.info("DLT Message received with [topic:{}] [partition:{}] [offset:{}]: {}",
                   metadata.topic(), metadata.partition(), metadata.offset(), payload);
         onMessage(payload, metadata);
     }

@@ -22,7 +22,7 @@ public class CatalogDto {
     public record GetFlightCatalogDto(String id, ItineraryDto itinerary, ScheduleDto schedule,
                                       Collection<SeatDto> seats) {}
 
-    public record SeatDto(String id, String number, double price, boolean isAvailable) {}
+    public record SeatDto(String id, String number, boolean isAvailable) {}
 
     public record Pagination<T>(int page, int total, int size, Collection<T> documents) {}
 
@@ -32,9 +32,7 @@ public class CatalogDto {
             String destination,
             Instant boardingAt,
             Instant landingAt,
-            Collection<FlightSeatDto> seats,
-            Instant createdAt,
-            Instant updatedAt) {
+            Collection<FlightSeatDto> seats) {
         public FlightDto {
             if (seats == null) {
                 seats = Collections.emptyList();
@@ -42,5 +40,5 @@ public class CatalogDto {
         }
     }
 
-    public record FlightSeatDto(String id, String number, int availability) {}
+    public record FlightSeatDto(String id, String type, String number, boolean isAvailable) {}
 }

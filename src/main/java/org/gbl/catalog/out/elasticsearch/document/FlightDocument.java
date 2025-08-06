@@ -19,7 +19,7 @@ public class FlightDocument {
 
     public String destination;
 
-    public boolean available;
+    public boolean isAvailable;
 
     @Field(type = FieldType.Date, format = DateFormat.basic_date_time)
     public Instant boardingAt;

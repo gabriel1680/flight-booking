@@ -31,10 +31,8 @@ public class CatalogCommandHandler {
         document.destination = command.destination();
         document.boardingAt = command.boardingAt();
         document.landingAt = command.landingAt();
-        document.available = command.seats().stream().anyMatch(seat -> seat.availability() == 1);
+        document.isAvailable = command.seats().stream().anyMatch(CreateSeatDto::isAvailable);
         document.seats = command.seats().stream().map(CatalogCommandHandler::toDocument).toList();
-        document.createdAt = command.createdAt();
-        document.updatedAt = command.updatedAt();
         return document;
     }
 
@@ -42,7 +40,7 @@ public class CatalogCommandHandler {
         final var seatDocument = new SeatDocument();
         seatDocument.id = seat.id();
         seatDocument.number = seat.number();
-        seatDocument.availability = seat.availability();
+        seatDocument.isAvailable = seat.isAvailable();
         return seatDocument;
     }
 
@@ -60,9 +58,7 @@ public class CatalogCommandHandler {
             String destination,
             Instant boardingAt,
             Instant landingAt,
-            Collection<CreateSeatDto> seats,
-            Instant createdAt,
-            Instant updatedAt) {}
+            Collection<CreateSeatDto> seats) {}
 
-    public record CreateSeatDto(String id, String number, int availability) {}
+    public record CreateSeatDto(String id, String type, String number, boolean isAvailable) {}
 }
