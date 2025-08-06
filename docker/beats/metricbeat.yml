@@ -1,0 +1,52 @@
+metricbeat.modules:
+  #  - module: jmx
+  #    metricsets: [ "jmx" ]
+  #    enabled: true
+  #    period: 10s
+  #    hosts: [ "booking-app:1099" ]
+  #    namespace: springapp
+  #    jmx.mappings:
+  #      - mbean: 'java.lang:type=Memory'
+  #        attributes:
+  #          - attr: HeapMemoryUsage
+  #            field: memory.heap_usage
+  #          - attr: NonHeapMemoryUsage
+  #            field: memory.non_heap_usage
+  #
+  #      - mbean: 'java.lang:type=GarbageCollector,name=*'
+  #        attributes:
+  #          - attr: CollectionTime
+  #            field: gc.collection_time
+  #          - attr: CollectionCount
+  #            field: gc.collection_count
+
+  - module: docker
+    metricsets: [ "container", "cpu", "diskio", "event", "healthcheck", "image", "info", "memory", "network" ]
+    hosts: [ "unix:///var/run/docker.sock" ]
+    period: 10s
+
+  - module: elasticsearch
+    metricsets: [ "node", "node_stats", "cluster_stats", "index" ]
+    period: 10s
+    hosts: [ "elasticsearch:9200" ]
+
+  - module: postgresql
+    metricsets:
+      - database
+      - bgwriter
+      - activity
+      - statement
+    period: 10s
+    hosts: [ "postgresql://postgres:5432?sslmode=disable" ]
+    username: ${POSTGRES_USER:postgres}
+    password: ${POSTGRES_PASSWORD:123}
+
+output.elasticsearch:
+  hosts: [ "http://elasticsearch:9200" ]
+  username: ${ELASTIC_USER:elastic}
+  password: ${ELASTIC_PASSWORD:elastic}
+
+setup.kibana:
+  host: "kibana:5601"
+
+setup.dashboards.enabled: true

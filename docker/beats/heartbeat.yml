@@ -1,0 +1,77 @@
+heartbeat.monitors:
+  - type: http
+    id: booking-app
+    name: Flight Booking Application
+    schedule: '@every 10s'
+    hosts: ["http://app:8080"]
+    check.response.status: 200
+    timeout: 5s
+    check.response.body.positive:
+      - '"status":"UP"'
+
+  - type: http
+    id: infrastructure
+    schedule: '@every 10s'
+    hosts: [ "http://elasticsearch:9200", "http://kibana:5601" ]
+    check.response.status: 200
+    check.response.body.positive:
+      - "Welcome"
+    timeout: 5s
+
+  - type: tcp
+    id: kafka-broker
+    name: Kafka Broker
+    schedule: '@every 10s'
+    hosts: [ "broker:9092" ]
+    timeout: 5s
+
+  - type: http
+    id: kafka-connect
+    name: Kafka Connect
+    schedule: '@every 10s'
+    hosts: [ "http://debezium:8083" ]
+    timeout: 5s
+    check.response.status: 200
+
+  - type: http
+    id: rabbitmq-api
+    name: RabbitMQ Management API
+    schedule: '@every 10s'
+    hosts: [ "http://rabbitmq:15672/api/healthchecks/node" ]
+    timeout: 5s
+    check.response.status: 200
+    username: rabbit_booking_user
+    password: 123
+    # RabbitMQ health API returns {"status":"ok"} on success
+    check.response.body.positive:
+      - '"status":"ok"'
+
+  - type: tcp
+    id: postgres
+    name: PostgreSQL Database
+    schedule: '@every 10s'
+    hosts: [ "postgres:5432" ]
+    timeout: 5s
+
+  #  Ping
+  - type: icmp
+    schedule: '@every 5s'
+    hosts:
+#            - app
+      - postgres
+      - debezium
+      - broker
+      - elasticsearch
+      - kibana
+
+output.elasticsearch:
+  hosts: [ "http://elasticsearch:9200" ]
+  username: ${ELASTIC_USER:elastic}
+  password: ${ELASTIC_PASSWORD:elastic}
+
+setup.kibana.host: "kibana:5601"
+
+setup.dashboards.enabled: false
+
+processors:
+  - add_cloud_metadata: ~
