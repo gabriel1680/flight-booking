@@ -15,20 +15,20 @@ public class FlightElkQueryBuilder {
     }
 
     public static Query availableOnly() {
-        return QueryBuilders.term(t -> t.field("available").value(true));
+        return QueryBuilders.term(t -> t.field("isAvailable").value(true));
     }
 
     public static Query destinationTo(String destination) {
         if (!StringUtils.hasText(destination)) {
             return NOOP;
         }
-        return QueryBuilders.term(t -> t.field("destination").value(destination));
+        return QueryBuilders.queryString(t -> t.fields("destination").query("*" + destination + "*"));
     }
 
     public static Query originatedOn(String origin) {
         if (!StringUtils.hasText(origin)) {
             return NOOP;
         }
-        return QueryBuilders.term(t -> t.field("origin").value(origin));
+        return QueryBuilders.queryString(t -> t.fields("origin").query("*" + origin + "*"));
     }
 }

@@ -68,7 +68,7 @@ public class CatalogQueryHandler {
     }
 
     public GetFlightCatalogDto handle(GetFlightQuery query) {
-        return flightElkRepository.findById(query.id())
+        return flightElkRepository.findByIdAndIsAvailableTrue(query.id())
                 .map(CatalogQueryHandler::toFlightDto)
                 .orElseThrow(() -> new NotFoundException("Flight not found )="));
     }
@@ -83,7 +83,7 @@ public class CatalogQueryHandler {
 
     private static List<SeatDto> toSeatsDto(Collection<SeatDocument> seats) {
         return seats.stream()
-                .map(seat -> new SeatDto(seat.id, seat.number, seat.price, seat.availability == 1))
+                .map(seat -> new SeatDto(seat.id, seat.number, seat.isAvailable))
                 .toList();
     }
 
