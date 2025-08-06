@@ -1,39 +1,46 @@
 services:
 
-#  booking-app:
-#    build:
-#      context: .
-#      dockerfile: Dockerfile
-#    container_name: booking-app
-#    environment:
-#      - PG_HOST=postgres
-#      - ELASTIC_HOST=elasticsearch
-#      - POSTGRES_DB
-#      - POSTGRES_USER
-#      - POSTGRES_PASSWORD
-#      - RABBITMQ_DEFAULT_USER
-#      - RABBITMQ_DEFAULT_PASS
-#      - ELASTIC_USER
-#      - ELASTIC_PASSWORD
-#      - OTLP_HOST
-#      - KAFKA_HOST
-#    ports:
-#      - "8080:8080"
-#    volumes:
-#      - ./spring-logs:/var/log/spring-boot
-#    depends_on:
-#      postgres:
-#        condition: service_healthy
-#      elasticsearch:
-#        condition: service_healthy
-#      broker:
-#        condition: service_healthy
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: app
+    environment:
+      - PG_HOST=postgres
+      - ELASTIC_HOST=elasticsearch
+      - POSTGRES_DB
+      - POSTGRES_USER
+      - POSTGRES_PASSWORD
+      - RABBITMQ_HOST
+      - RABBITMQ_DEFAULT_USER
+      - RABBITMQ_DEFAULT_PASS
+      - ELASTIC_USER
+      - ELASTIC_PASSWORD
+      - OTLP_HOST
+      - KAFKA_HOST
+      # For the default AdminKafkaClient
+      - SPRING_KAFKA_BOOTSTRAPSERVERS=broker:9092
+    ports:
+      - "8080:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      elasticsearch:
+        condition: service_healthy
+      broker:
+        condition: service_healthy
 #    healthcheck:
 #      test: [ "CMD", "curl", "-f", "http://localhost:8080/actuator/health" ]
 #      interval: 10s
 #      timeout: 5s
 #      retries: 5
 #      start_period: 10s
+
+  nginx:
+    build: ./docker/nginx
+    container_name: nginx
+    ports:
+      - "8000:80"
 
   postgres:
     image: 'postgres:latest'
@@ -66,7 +73,7 @@ services:
 
   elasticsearch:
     platform: linux/arm64
-    image: docker.elastic.co/elasticsearch/elasticsearch:7.17.28
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.13.4
     container_name: elasticsearch
     hostname: elasticsearch
     ports:
@@ -83,7 +90,7 @@ services:
       start_period: 20s
 
   logstash:
-    image: docker.elastic.co/logstash/logstash:8.12.0
+    image: docker.elastic.co/logstash/logstash:8.13.4
     container_name: logstash
     volumes:
       - ./docker/logstash/logstash.conf:/usr/share/logstash/pipeline/logstash.conf
@@ -101,7 +108,7 @@ services:
       start_period: 30s
 
   kibana:
-    image: docker.elastic.co/kibana/kibana:7.17.28
+    image: docker.elastic.co/kibana/kibana:8.13.4
     container_name: kibana
     environment:
       ELASTICSEARCH_HOSTS: http://elasticsearch:9200
@@ -117,24 +124,65 @@ services:
       retries: 5
       start_period: 30s
 
-  filebeat:
-    image: docker.elastic.co/beats/filebeat:8.12.0
-    container_name: filebeat
+#  filebeat:
+#    image: docker.elastic.co/beats/filebeat:8.13.4
+#    container_name: filebeat
+#    user: root
+#    volumes:
+#      - ./docker/beats/filebeat.yml:/usr/share/filebeat/filebeat.yml:ro
+#      - ./spring-logs:/var/log/spring-boot:ro  # This folder should be where your app writes logs
+#    depends_on:
+#      logstash:
+#        condition: service_healthy
+#      kibana:
+#        condition: service_healthy
+#    healthcheck:
+#      test: [ "CMD-SHELL", "filebeat test config -e || exit 1" ]
+#      interval: 10s
+#      timeout: 10s
+#      retries: 3
+#      start_period: 15s
+
+  metricbeat:
+    image: docker.elastic.co/beats/metricbeat:8.13.4
+    container_name: metricbeat
     user: root
     volumes:
-      - ./docker/filebeat/filebeat.yml:/usr/share/filebeat/filebeat.yml:ro
-      - ./spring-logs:/var/log/spring-boot:ro  # This folder should be where your app writes logs
+      - ./docker/beats/metricbeat.yml:/usr/share/metricbeat/metricbeat.yml:ro
+      - ./modules.d:/usr/share/metricbeat/modules.d
+      - /var/run/docker.sock:/var/run/docker.sock
     depends_on:
-      logstash:
+      postgres:
+        condition: service_healthy
+      elasticsearch:
         condition: service_healthy
       kibana:
         condition: service_healthy
     healthcheck:
-      test: [ "CMD-SHELL", "filebeat test config -e || exit 1" ]
-      interval: 10s
-      timeout: 10s
+      test: [ "CMD-SHELL", "pgrep -f metricbeat > /dev/null || exit 1" ]
+      interval: 30s
+      timeout: 5s
       retries: 3
-      start_period: 15s
+
+  heartbeat:
+    image: docker.elastic.co/beats/heartbeat:8.13.4
+    container_name: heartbeat
+    restart: unless-stopped
+    user: root  # Needed for ICMP (ping); requires CAP_NET_RAW
+    volumes:
+      - ./docker/beats/heartbeat.yml:/usr/share/heartbeat/heartbeat.yml:ro
+    environment:
+      setup.kibana.host: kibana:5601
+    depends_on:
+      elasticsearch:
+        condition: service_healthy
+      kibana:
+        condition: service_healthy
+    healthcheck:
+      test: [ "CMD-SHELL", "pgrep -f heartbeat > /dev/null || exit 1" ]
+      interval: 30s
+      timeout: 5s
+      retries: 3
 
   jaeger:
     image: jaegertracing/all-in-one:1.54
@@ -182,7 +230,8 @@ services:
       KAFKA_BROKER_ID: 1
       KAFKA_ZOOKEEPER_CONNECT: 'zookeeper:2181'
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://broker:29092,PLAINTEXT_HOST://localhost:9092
+      # !IMPORTANT: this will cause a connection error when attempt to execute the app outside docker
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://broker:29092,PLAINTEXT_HOST://broker:9092
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
       KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
       KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
@@ -285,5 +334,4 @@ services:
       - "4317:4317" # OTLP gRPC
       - "4318:4318" # OTLP HTTP
     depends_on:
-      logstash:
-        condition: service_healthy
+      - app

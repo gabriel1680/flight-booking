@@ -29,6 +29,7 @@ spring:
     username: ${postgres.username}
     password: ${postgres.password}
   rabbitmq:
+    host: ${rabbitmq.host}
     username: ${rabbitmq.username}
     password: ${rabbitmq.password}
   hikari:
