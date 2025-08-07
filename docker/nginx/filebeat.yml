@@ -4,15 +4,32 @@ filebeat.inputs:
     paths:
       - /var/log/*.log
 
+  - type: filestream
+    enabled: false
+    paths:
+      - /var/log/*.log
+
+# ============================== Filebeat modules ==============================
+
 filebeat.config.modules:
   path: ${path.config}/modules.d/*.yml
   reload.enabled: false
 
+# ======================= Elasticsearch template setting =======================
+
+setup.template.settings:
+  index.number_of_shards: 1
+
+setup.kibana.host: "kibana:5601"
+
 output.elasticsearch:
-  hosts: [ "http://elasticsearch:9200" ]
+  hosts: [ "elasticsearch:9200" ]
   username: ${ELASTIC_USER:elastic}
   password: ${ELASTIC_PASSWORD:elastic}
 
-setup.template.enabled: false
-
-setup.kibana.host: "kibana:5601"
+processors:
+  - add_host_metadata:
+      when.not.contains.tags: forwarded
+  - add_cloud_metadata: ~
+  - add_docker_metadata: ~
+  - add_kubernetes_metadata: ~
