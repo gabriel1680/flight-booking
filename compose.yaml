@@ -20,6 +20,9 @@ services:
       - KAFKA_HOST
       # For the default AdminKafkaClient
       - SPRING_KAFKA_BOOTSTRAPSERVERS=broker:9092
+      - OTEL_EXPORTER_OTLP_ENDPOINT=http://otel-collector:4318
+      - OTEL_EXPORTER_OTLP_PROTOCOL=http
+      - OTEL_SERVICE_NAME=booking-app
     ports:
       - "8080:8080"
     depends_on:
@@ -29,6 +32,8 @@ services:
         condition: service_healthy
       broker:
         condition: service_healthy
+      otel-collector:
+        condition: service_started
     healthcheck:
       test: [ "CMD", "curl", "-f", "http://localhost:8080/actuator/health" ]
       interval: 10s
@@ -131,25 +136,6 @@ services:
       timeout: 5s
       retries: 5
       start_period: 30s
-
-#  filebeat:
-#    image: docker.elastic.co/beats/filebeat:8.13.4
-#    container_name: filebeat
-#    user: root
-#    volumes:
-#      - ./docker/beats/filebeat2.yml:/usr/share/filebeat/filebeat2.yml:ro
-#      - ./spring-logs:/var/log/spring-boot:ro  # This folder should be where your app writes logs
-#    depends_on:
-#      logstash:
-#        condition: service_healthy
-#      kibana:
-#        condition: service_healthy
-#    healthcheck:
-#      test: [ "CMD-SHELL", "filebeat test config -e || exit 1" ]
-#      interval: 10s
-#      timeout: 10s
-#      retries: 3
-#      start_period: 15s
 
   metricbeat:
     image: docker.elastic.co/beats/metricbeat:8.13.4
@@ -335,12 +321,12 @@ services:
   otel-collector:
     image: otel/opentelemetry-collector-contrib:0.91.0
     container_name: otel-collector
-    command: [ "--config=/etc/otel-collector-config.yaml" ]
     volumes:
-      - ./docker/otel/otel-collector-config.yaml:/etc/otel-collector-config.yaml
+      - ./docker/otel/otel-collector-config.yaml:/etc/config.yaml
+    command: [ "--config=/etc/config.yaml" ]
     ports:
       - "4317:4317" # OTLP gRPC
       - "4318:4318" # OTLP HTTP
     depends_on:
-      app:
+      elasticsearch:
         condition: service_healthy

@@ -81,14 +81,6 @@ management:
     tracing:
       enabled: true
       endpoint: ${opentelemetry.tracing.endpoint}
-  endpoints:
-    web:
-      exposure:
-        include: { }
-  metrics:
-    export:
-      otlp:
-        enabled: true
 
 rabbit:
   queues:

@@ -1,39 +1,32 @@
 receivers:
   otlp:
     protocols:
-      grpc: { }
-      http: { }
+      http:
+      grpc:
 
 exporters:
-#  jaeger:
-#    endpoint: "http://jaeger:14250"
-#    tls:
-#      insecure: true
+  elasticsearch/logs:
+    endpoints: [ "http://elasticsearch:9200" ]
+    user: "elastic"
+    password: "elastic"
+    index: "otel-logs-%{+yyyy.MM.dd}"
 
-  elasticsearch:
-    endpoints: ["http://elasticsearch:9200"]
-    logs_index: "otel-logs"       # optional
+  otlp/jaeger:
+    endpoint: jaeger:4317
     tls:
       insecure: true
 
-  logging:
-    loglevel: debug
-
 processors:
-  batch:
+  batch: {}
 
 service:
   pipelines:
-    traces:
-      receivers: [ otlp ]
-      processors: [ batch ]
-      exporters: [ logging ]
-    metrics:
-      receivers: [ otlp ]
-      processors: [ batch ]
-      exporters: [ logging ]
     logs:
       receivers: [ otlp ]
       processors: [ batch ]
-      exporters: [ elasticsearch, logging ]
+      exporters: [ elasticsearch/logs ]
 
+    traces:
+      receivers: [ otlp ]
+      processors: [ batch ]
+      exporters: [ otlp/jaeger ]

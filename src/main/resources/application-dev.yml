@@ -44,3 +44,5 @@ opentelemetry:
     url: http://${OTLP_HOST:localhost}:4318/v1/metrics
   tracing:
     endpoint: http://${OTLP_HOST:localhost}:4318/v1/traces
+  logging:
+    endpoint: http://${OTLP_HOST:localhost}:4318/v1/logs
